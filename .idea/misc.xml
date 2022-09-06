@@ -5,7 +5,9 @@
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.22916666666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29393115942028986" />
-        <entry key="app/src/main/res/layout/item_song.xml" value="0.20408163265306123" />
+        <entry key="app/src/main/res/layout/fragment_song_list.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_song.xml" value="0.25" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.3875" />
       </map>
     </option>
   </component>

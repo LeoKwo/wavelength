@@ -1,5 +1,6 @@
-package com.example.wavelength
+package com.example.wavelength.retrofit
 
+import com.example.wavelength.api.MusicAPI
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

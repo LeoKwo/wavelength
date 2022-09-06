@@ -1,6 +1,6 @@
-package com.example.wavelength
+package com.example.wavelength.model
 
-data class Todo(
+data class Song(
     val completed: Boolean,
     val id: Int,
     val title: String,

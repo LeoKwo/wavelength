@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">wavelength</string>
+    <string name="tab_one_name">All songs</string>
+
 </resources>
