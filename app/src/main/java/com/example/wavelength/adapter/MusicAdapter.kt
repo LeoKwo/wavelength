@@ -41,6 +41,7 @@ class MusicAdapter: RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
             val todo = todos[position]
             tvSongArtist.text = todo.title
             tvSongTitle.text = todo.id.toString()
+            
         }
     }
 }
