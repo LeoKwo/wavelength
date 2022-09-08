@@ -12,5 +12,4 @@ object RetrofitInstance {
             .build()
             .create(MusicAPI::class.java)
     }
-
 }
