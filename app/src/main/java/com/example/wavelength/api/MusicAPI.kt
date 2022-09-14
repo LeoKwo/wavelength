@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface MusicAPI {
     // for testing
-    @GET("/todos")
+    @GET("all")
     suspend fun getSongs(): Response<List<Song>>
 
 }

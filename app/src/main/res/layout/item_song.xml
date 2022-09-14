@@ -55,6 +55,8 @@
         android:layout_marginLeft="8dp"
         android:layout_width="15dp"
         android:layout_height="15dp"
+        android:src="@drawable/ic_heart"
+        android:tint="@color/red"
         >
 
     </androidx.appcompat.widget.AppCompatImageView>

@@ -5,6 +5,7 @@
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.22916666666666666" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2075" />
+        <entry key="app/src/main/res/drawable/ic_heart.xml" value="0.2295" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2075" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29393115942028986" />
         <entry key="app/src/main/res/layout/fragment_song_list.xml" value="0.25" />
