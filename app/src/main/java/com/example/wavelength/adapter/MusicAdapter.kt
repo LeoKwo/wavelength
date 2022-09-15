@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wavelength.model.Song
 import com.example.wavelength.databinding.ItemSongBinding
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class MusicAdapter: RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
 
@@ -45,6 +47,9 @@ class MusicAdapter: RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
     override fun onBindViewHolder(holder: MusicViewHolder, position: Int) {
         holder.binding.apply {
             val song = songs[position]
+
+//            val albumArtDocument = Firebase.firestore.collection("songs").document("")
+//            ivAlbumArt.setImageResource()
 
             tvSongArtist.text = song.artistName
             tvSongTitle.text = song.songName
