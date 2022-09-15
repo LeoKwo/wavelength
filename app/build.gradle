@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id("kotlin-parcelize")
 }
 
 android {
@@ -62,4 +63,6 @@ dependencies {
 //    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
 
+    // Firebase and Firestore
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.3.0'
 }

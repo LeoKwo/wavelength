@@ -2,5 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_tab_one"
+        android:icon="@drawable/ic_music"
+        android:iconTint="@color/gray"
         android:title="@string/tab_one_name" />
+
+    <item
+        android:id="@+id/nav_tab_two"
+        android:icon="@drawable/ic_playlist"
+        android:iconTint="@color/gray"
+        android:title="@string/tab_two_name" />
 </menu>

@@ -12,6 +12,8 @@
         android:layout_height="60dp"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
+        app:itemIconTint="@color/bnv_tab_item_foreground"
+        app:itemTextColor="@color/bnv_tab_item_foreground"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
