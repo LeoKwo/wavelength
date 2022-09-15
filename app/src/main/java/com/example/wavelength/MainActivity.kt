@@ -2,6 +2,10 @@ package com.example.wavelength
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Window
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -74,6 +78,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_tab_one, R.id.nav_tab_two
             )
         )
+
+        // hide action bar
+//        supportActionBar?.hide()
 
         setupActionBarWithNavController(navController, appBarConfiguration)
 

@@ -11,6 +11,9 @@ import com.example.wavelength.model.Song
 import com.example.wavelength.databinding.ItemSongBinding
 
 class MusicAdapter: RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
+
+    var onSongClickListener: (song: Song) -> Unit = {_ ->}
+
     inner class MusicViewHolder(val binding: ItemSongBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val diffCallback = object : DiffUtil.ItemCallback<Song>() {
@@ -45,13 +48,17 @@ class MusicAdapter: RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
 
             tvSongArtist.text = song.artistName
             tvSongTitle.text = song.songName
+            tvSongAlbum.text = song.albumName
+
+            clSongItem.setOnClickListener{
+                onSongClickListener(song)
+            }
 //            ivFavButton.visibility = View.VISIBLE
             if (song.isFavorite) ivFavButton.visibility = View.VISIBLE
 //            ivFavButton.visibility = if song.isFavorite View.VISIBLE else View.INVISIBLE
             Log.i("name", song.toString())
 //            tvSongArtist.text = todo.title
 //            tvSongTitle.text = todo.id.toString()
-
         }
     }
 //    inner class MusicViewHolder(val binding: ItemSongBinding) : RecyclerView.ViewHolder(binding.root)
