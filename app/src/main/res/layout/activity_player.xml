@@ -28,6 +28,7 @@
         android:layout_marginTop="12dp"
         android:textStyle="bold"
         android:text="placeholder"
+        android:textColor="@color/black"
         />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -47,6 +48,7 @@
             android:layout_marginRight="4dp"
             android:textSize="16sp"
             android:text="placeholder"
+            android:textStyle="bold"
             />
 
         <TextView
@@ -55,7 +57,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textSize="16sp"
-            android:textStyle="italic"
             android:text="placeholder"
             />
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -77,6 +78,7 @@
             android:layout_height="30dp"
             android:src="@drawable/ic_next"
             android:rotation="180"
+            app:tint="@color/dark_blue"
             ></ImageView>
 
         <ImageView
@@ -85,6 +87,7 @@
             android:layout_height="35dp"
             android:src="@drawable/ic_play"
             android:layout_marginHorizontal="50dp"
+            app:tint="@color/dark_blue"
             ></ImageView>
 
         <ImageView
@@ -92,6 +95,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_next"
+            app:tint="@color/dark_blue"
             ></ImageView>
     </androidx.appcompat.widget.LinearLayoutCompat>
 

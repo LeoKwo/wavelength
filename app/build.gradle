@@ -65,4 +65,7 @@ dependencies {
 
     // Firebase and Firestore
     implementation 'com.google.firebase:firebase-firestore-ktx:24.3.0'
+
+    // Coil for image loading
+    implementation("io.coil-kt:coil:2.2.1")
 }

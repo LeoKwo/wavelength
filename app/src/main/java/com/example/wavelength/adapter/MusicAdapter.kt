@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.wavelength.model.Song
 import com.example.wavelength.databinding.ItemSongBinding
 import com.google.firebase.firestore.ktx.firestore
@@ -54,6 +55,9 @@ class MusicAdapter: RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
             tvSongArtist.text = song.artistName
             tvSongTitle.text = song.songName
             tvSongAlbum.text = song.albumName
+            ivAlbumArt.load("https://musiclibrary.nyc3.cdn.digitaloceanspaces.com/${song.songName}.jpeg") {
+                crossfade(true)
+            }
 
             clSongItem.setOnClickListener{
                 onSongClickListener(song)

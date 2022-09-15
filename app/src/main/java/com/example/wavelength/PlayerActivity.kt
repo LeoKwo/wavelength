@@ -10,6 +10,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.example.wavelength.databinding.ActivityPlayerBinding
 import com.example.wavelength.model.Song
 import java.io.IOException
@@ -39,6 +41,7 @@ class PlayerActivity : AppCompatActivity() {
         val tvSongAlbum = findViewById<TextView>(R.id.tvSongAlbum)
         val tvSongArtist = findViewById<TextView>(R.id.tvSongArtist)
         val ivPlay = findViewById<ImageView>(R.id.ivPlay)
+        val ivAlbumArt = findViewById<ImageView>(R.id.ivAlbumArt)
 
         var playing = false
 
@@ -49,7 +52,11 @@ class PlayerActivity : AppCompatActivity() {
 
         // test player
         var streamURL = ""
+        var albumURL = ""
         if (song != null) {
+            // init album art
+            albumURL = "https://musiclibrary.nyc3.cdn.digitaloceanspaces.com/${song.songName}.jpeg"
+
             // test player
             streamURL = "https://musiclibrary.nyc3.cdn.digitaloceanspaces.com/${song.songName}.mp3"
             tvSongTitle.text = song.songName
@@ -73,9 +80,11 @@ class PlayerActivity : AppCompatActivity() {
 
         ivPlay.setOnClickListener {
             if (!playing) {
+                ivPlay.setImageResource(R.drawable.ic_pause)
                 player.start()
                 playing = true
             } else {
+                ivPlay.setImageResource(R.drawable.ic_play)
                 player.pause()
                 playing = false
             }
@@ -83,6 +92,13 @@ class PlayerActivity : AppCompatActivity() {
             Toast.makeText(this, "Now playing: ${song?.songName} by ${song?.artistName}", Toast.LENGTH_SHORT).show()
         }
 
+
+        // set album art
+//        https://musiclibrary.nyc3.cdn.digitaloceanspaces.com/Too%20Good%20At%20Goodbyes.jpeg
+//        ivAlbumArt.setImageResource (albumURL)
+        ivAlbumArt.load(albumURL) {
+            crossfade(true)
+        }
 
         // add back button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
