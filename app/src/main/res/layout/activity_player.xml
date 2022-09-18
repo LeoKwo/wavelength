@@ -6,14 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".PlayerActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tbPlayer"
-        app:layout_constraintTop_toTopOf="parent"
+    <RelativeLayout
+        android:id="@+id/background"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        >
-
-    </androidx.appcompat.widget.Toolbar>
+        android:layout_height="match_parent"
+        android:background="@color/purple_off_white"
+        />
 
     <ImageView
         android:id="@+id/ivAlbumArt"

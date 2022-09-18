@@ -2,11 +2,7 @@ package com.example.wavelength
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -14,22 +10,16 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import coil.load
-import com.example.wavelength.api.MusicAPI
 import com.example.wavelength.databinding.ActivityPlayerBinding
 import com.example.wavelength.model.Song
 import com.example.wavelength.retrofit.RetrofitInstance
-import com.example.wavelength.service.MusicAPIService
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import java.io.IOException
-import java.lang.Exception
 
 
 private const val SONG_KEY = "song"
@@ -145,6 +135,9 @@ class PlayerActivity : AppCompatActivity() {
                 Log.i("post-error", e.message.toString())
             }
         }
+
+        // load background image
+
     }
 
     // add back button
