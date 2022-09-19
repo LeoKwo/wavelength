@@ -2,12 +2,14 @@ package com.example.wavelength
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.ImageView
+import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +22,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import java.io.IOException
-
+import kotlin.math.ceil
 
 private const val SONG_KEY = "song"
 
@@ -36,6 +38,9 @@ lateinit var binding: ActivityPlayerBinding
 lateinit var player: MediaPlayer
 
 class PlayerActivity : AppCompatActivity() {
+
+    private lateinit var runnable: Runnable
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
@@ -48,6 +53,9 @@ class PlayerActivity : AppCompatActivity() {
         val ivPlay = findViewById<ImageView>(R.id.ivPlay)
         val ivAlbumArt = findViewById<ImageView>(R.id.ivAlbumArt)
         val ivFav = findViewById<ImageView>(R.id.ivFav)
+
+        val sbSong = findViewById<SeekBar>(R.id.sbSong)
+
 
         supportActionBar?.apply {
             title = "Now playing"
@@ -76,8 +84,7 @@ class PlayerActivity : AppCompatActivity() {
             tvSongArtist.text = song.artistName
         }
 
-        Log.i("StreamURL", streamURL)
-
+        // init media player for audio files
         try {
             player.setAudioAttributes(
                 AudioAttributes.Builder()
@@ -90,9 +97,10 @@ class PlayerActivity : AppCompatActivity() {
             Log.i("Set streamURL error", e.message.toString())
         }
 
+        // play/pause button animation
         ivPlay.setOnClickListener {
             if (!player.isPlaying) {
-                Toast.makeText(this, "Now playing: ${song?.songName} by ${song?.artistName}", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Now playing: ${song?.songName} by ${song?.artistName}", Toast.LENGTH_SHORT).show()
                 ivPlay.setImageResource(R.drawable.ic_pause)
                 player.start()
             } else {
@@ -136,8 +144,34 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
 
-        // load background image
+        // seekbar
+        sbSong.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seek: SeekBar,
+                                               progress: Int, fromUser: Boolean) {
+                    if (fromUser) {
+                        player.seekTo(progress)
+                    }
+                }
 
+                override fun onStartTrackingTouch(seek: SeekBar) { }
+
+                override fun onStopTrackingTouch(seek: SeekBar) { }
+            }
+        )
+
+        // set seekbar progress
+        sbSong.max = player.duration
+        runnable = Runnable {
+            sbSong.progress = player.currentPosition
+            Handler(Looper.getMainLooper()).postDelayed(runnable, 1000)
+        }
+        Handler(Looper.getMainLooper()).postDelayed(runnable, 1000)
+        player.setOnCompletionListener {
+            player.pause()
+            player.seekTo(0)
+            ivPlay.setImageResource(R.drawable.ic_play)
+        }
     }
 
     // add back button

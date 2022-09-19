@@ -2,8 +2,10 @@ package com.example.wavelength.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -52,7 +54,7 @@ class MusicAdapter: RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
 
             tvSongArtist.text = song.artistName
             tvSongTitle.text = song.songName
-            tvSongAlbum.text = song.albumName
+//            tvSongAlbum.text = song.albumName
             ivAlbumArt.load("https://musiclibrary.nyc3.cdn.digitaloceanspaces.com/${song.songName}.jpeg") {
                 crossfade(true)
             }
@@ -62,8 +64,7 @@ class MusicAdapter: RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
             }
 
             if (song.isFavorite) {
-                ivFavButton.setImageResource(R.drawable.ic_heart)
-                ivFavButton.setColorFilter(ContextCompat.getColor(context, R.color.orange))
+                ivFavButton.visibility = View.VISIBLE
             }
         }
     }

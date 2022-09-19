@@ -9,6 +9,10 @@
         <entry key="app/src/main/res/drawable/ic_heart_outline.xml" value="0.221" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2075" />
         <entry key="app/src/main/res/drawable/ic_play.xml" value="0.175" />
+        <entry key="app/src/main/res/drawable/seek_bar_background.xml" value="0.22" />
+        <entry key="app/src/main/res/drawable/seek_bar_progress.xml" value="0.22" />
+        <entry key="app/src/main/res/drawable/seek_bar_style.xml" value="0.22" />
+        <entry key="app/src/main/res/drawable/seek_bar_thumb.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29393115942028986" />
         <entry key="app/src/main/res/layout/activity_player.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_playlist.xml" value="0.10790273556231003" />

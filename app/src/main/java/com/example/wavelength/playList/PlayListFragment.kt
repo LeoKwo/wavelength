@@ -19,7 +19,6 @@ class PlayListFragment: Fragment() {
     ): View? {
         super.onCreate(savedInstanceState)
         binding = FragmentPlaylistBinding.inflate(layoutInflater)
-
 //        initRecyclerView()
 //        lifecycleScope.launchWhenCreated {
 //            binding.pbMusicLibrary.isVisible = true
