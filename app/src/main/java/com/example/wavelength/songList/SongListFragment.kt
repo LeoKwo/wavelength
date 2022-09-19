@@ -18,6 +18,7 @@ import com.example.wavelength.databinding.FragmentSongListBinding
 import com.example.wavelength.model.Song
 import com.example.wavelength.navigateToPlayerActivity
 import com.example.wavelength.retrofit.RetrofitInstance
+import okhttp3.internal.notify
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -64,8 +65,6 @@ class SongListFragment : Fragment()  {
 
     private lateinit var currentSong: Song
 
-//    private lateinit var clSongItem: View
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreate(savedInstanceState)
@@ -75,24 +74,20 @@ class SongListFragment : Fragment()  {
         initRecyclerView()
 
         musicAdapter.onSongClickListener = { song ->
-                Toast.makeText(activity, "Now playing: ${song.songName} by ${song.artistName}", Toast.LENGTH_SHORT).show()
-////                val title = song.title
-////                val artist = song.artist
-//            tvSongInfo.text = root.context.getString(R.string.song_info_format, song.title, song.artist)
-////                tvInfoArtistName.text = song.artist
-//            clSongInfo.isInvisible = false
-
+            Toast.makeText(activity, "${song.songName} by ${song.artistName}", Toast.LENGTH_SHORT).show()
             currentSong = song
             activity?.let { navigateToPlayerActivity(it, currentSong) }
         }
+        getAllSongs()
+        return binding.root
+    }
 
-//        clSongItem
+    override fun onResume() {
+        getAllSongs()
+        super.onResume()
+    }
 
-//        navigateToPlayerActivity(activity, currentSong)
-//        clSongInfo.setOnClickListener {
-//            navigateToMainActivity(this@SongListActivity, currentlyPlaying)
-//        }
-
+    private fun getAllSongs() {
         lifecycleScope.launchWhenCreated {
             binding.pbMusicLibrary.isVisible = true
             val res = try {
@@ -111,7 +106,6 @@ class SongListFragment : Fragment()  {
             }
             binding.pbMusicLibrary.isVisible = false
         }
-        return binding.root
     }
 
     private fun initRecyclerView() = binding.rvMusicLibrary.apply {

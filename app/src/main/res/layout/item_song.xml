@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/tvSongTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:text="placeholder title"
@@ -40,7 +40,7 @@
         </TextView>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             >
             <TextView
@@ -52,15 +52,6 @@
                 android:textStyle="bold"
                 android:text="placeholder artist">
             </TextView>
-
-            <TextView
-                android:id="@+id/tvSongAlbum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="placeholder album"
-                >
-            </TextView>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -70,12 +61,12 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="invisible"
         android:layout_marginLeft="8dp"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:src="@drawable/ic_heart"
-        android:tint="@color/red"
+        android:tint="@color/orange"
+        android:visibility="gone"
         >
 
     </androidx.appcompat.widget.AppCompatImageView>
