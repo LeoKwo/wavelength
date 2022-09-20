@@ -19,6 +19,8 @@
         <entry key="app/src/main/res/layout/fragment_song_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_song.xml" value="0.25" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.3875" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.141" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.141" />
       </map>
     </option>
   </component>
