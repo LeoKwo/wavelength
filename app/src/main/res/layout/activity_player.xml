@@ -7,10 +7,10 @@
     tools:context=".PlayerActivity">
 
     <RelativeLayout
+        android:background="?attr/colorOnPrimary"
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/purple_off_white"
         />
 
     <ImageView
@@ -84,18 +84,20 @@
     <SeekBar
         android:id="@+id/sbSong"
         android:layout_width="320dp"
-        android:layout_height="wrap_content"
+        android:layout_height="15dp"
         app:layout_constraintBottom_toTopOf="@id/clControl"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:progressDrawable="@drawable/seek_bar_progress"
         android:thumb="@drawable/seek_bar_thumb"
         android:layout_marginBottom="50dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clControl"
-        android:layout_width="300dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

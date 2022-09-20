@@ -8,10 +8,10 @@
     >
 
     <RelativeLayout
+        android:background="?attr/colorOnPrimary"
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/purple_off_white"
         />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
