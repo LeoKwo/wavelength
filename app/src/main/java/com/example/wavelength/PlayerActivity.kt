@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
@@ -15,6 +16,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import coil.load
+import coil.transform.CircleCropTransformation
 import com.example.wavelength.databinding.ActivityPlayerBinding
 import com.example.wavelength.model.Song
 import com.example.wavelength.retrofit.RetrofitInstance
@@ -52,6 +54,7 @@ class PlayerActivity : AppCompatActivity() {
         val tvSongArtist = findViewById<TextView>(R.id.tvSongArtist)
         val ivPlay = findViewById<ImageView>(R.id.ivPlay)
         val ivAlbumArt = findViewById<ImageView>(R.id.ivAlbumArt)
+        val ivAlbumArtOverlay = findViewById<ImageView>(R.id.ivAlbumArtOverlay)
         val ivFav = findViewById<ImageView>(R.id.ivFav)
 
         val sbSong = findViewById<SeekBar>(R.id.sbSong)
@@ -97,13 +100,20 @@ class PlayerActivity : AppCompatActivity() {
             Log.i("Set streamURL error", e.message.toString())
         }
 
+        // load rotation animation
+//        val rotation = AnimationUtils.loadAnimation(this, R.anim.rotate)
+//        rotation.fillAfter = true
+
         // play/pause button animation
         ivPlay.setOnClickListener {
             if (!player.isPlaying) {
-//                Toast.makeText(this, "Now playing: ${song?.songName} by ${song?.artistName}", Toast.LENGTH_SHORT).show()
+                ivAlbumArt.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
+                ivAlbumArtOverlay.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
                 ivPlay.setImageResource(R.drawable.ic_pause)
                 player.start()
             } else {
+                ivAlbumArt.animation = null
+                ivAlbumArtOverlay.animation = null
                 ivPlay.setImageResource(R.drawable.ic_play)
                 player.pause()
             }
@@ -113,6 +123,7 @@ class PlayerActivity : AppCompatActivity() {
         // set album art
         ivAlbumArt.load(albumURL) {
             crossfade(true)
+            transformations(CircleCropTransformation())
         }
 
         // render fav button
@@ -170,6 +181,8 @@ class PlayerActivity : AppCompatActivity() {
         player.setOnCompletionListener {
             player.pause()
             player.seekTo(0)
+            ivAlbumArt.animation = null
+            ivAlbumArtOverlay.animation = null
             ivPlay.setImageResource(R.drawable.ic_play)
         }
     }
