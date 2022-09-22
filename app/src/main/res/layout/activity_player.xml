@@ -14,9 +14,21 @@
         />
 
     <ImageView
+        android:id="@+id/ivAlbumArtOverlay"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        app:layout_constraintStart_toStartOf="@id/ivAlbumArt"
+        app:layout_constraintEnd_toEndOf="@id/ivAlbumArt"
+        app:layout_constraintTop_toTopOf="@id/ivAlbumArt"
+        app:layout_constraintBottom_toBottomOf="@id/ivAlbumArt"
+        android:src="@drawable/album_art_spinner"
+        >
+    </ImageView>
+
+    <ImageView
         android:id="@+id/ivAlbumArt"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="290dp"
+        android:layout_height="290dp"
         android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
