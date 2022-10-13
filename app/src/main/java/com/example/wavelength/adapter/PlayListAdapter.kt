@@ -8,15 +8,16 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.wavelength.R
 import com.example.wavelength.databinding.ItemPlayListBinding
 import com.example.wavelength.databinding.ItemSongBinding
 import com.example.wavelength.model.PlayList
 import com.example.wavelength.model.Song
 
 class PlayListAdapter: RecyclerView.Adapter<PlayListAdapter.PlayListViewHolder>(){
-    inner class PlayListViewHolder(val binding: ItemPlayListBinding) : RecyclerView.ViewHolder(binding.root)
+//    var onPlayListClickListener: (playList: PlayList) -> Unit = {_ ->}
 
-    var onPlayListClickListener: (playList: PlayList) -> Unit = {_ ->}
+    inner class PlayListViewHolder(val binding: ItemPlayListBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val diffCallback = object : DiffUtil.ItemCallback<PlayList>() {
         override fun areItemsTheSame(oldItem: PlayList, newItem: PlayList): Boolean {
@@ -47,11 +48,13 @@ class PlayListAdapter: RecyclerView.Adapter<PlayListAdapter.PlayListViewHolder>(
     override fun onBindViewHolder(holder: PlayListViewHolder, position: Int) {
         holder.binding.apply {
             val playList = playLists[position]
-
-            tvPlayListName.text = playList.playListName
-            ivPlayListArt.load(playList.playListArt) {
-                crossfade(true)
+            tvPlayListName.text = playList.name
+            if (playList.artUrl != "") {
+                ivPlayListArt.load(playList.artUrl) {
+                    crossfade(true)
+                }
             }
+//            clPlayList.setOnClickListener{onPlayListClickListener(playList)}
         }
     }
 

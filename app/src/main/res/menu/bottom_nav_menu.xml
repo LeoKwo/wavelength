@@ -11,4 +11,10 @@
         android:icon="@drawable/ic_playlist"
         android:iconTint="@color/gray_purple_off_white"
         android:title="@string/tab_two_name" />
+
+    <item
+        android:id="@+id/nav_tab_three"
+        android:icon="@drawable/ic_search"
+        android:iconTint="@color/gray_purple_off_white"
+        android:title="@string/tab_three_name" />
 </menu>

@@ -15,6 +15,9 @@ interface MusicAPI {
     @GET("playLists")
     suspend fun getPlayLists(): Response<List<PlayList>>
 
+    @GET("favs")
+    suspend fun getFavSongs(): Response<List<Song>>
+
     @POST("fav/{id}/{fav}")
     suspend fun favSong(@Path("id") id: String, @Path("fav") fav: Boolean)
 }
