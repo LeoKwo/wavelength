@@ -2,4 +2,5 @@
     <string name="app_name">Wavelength</string>
     <string name="tab_one_name">All songs</string>
     <string name="tab_two_name">Playlist</string>
+    <string name="tab_three_name">Search</string>
 </resources>

@@ -24,8 +24,6 @@ class PlayListFragment: Fragment() {
     private lateinit var binding: FragmentPlaylistBinding
     private lateinit var playListAdapter: PlayListAdapter
 
-//    private lateinit var musicAdapter: MusicAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,30 +34,12 @@ class PlayListFragment: Fragment() {
 
         initRecyclerView()
 
-//        lifecycleScope.launchWhenCreated {
-//            binding.pbMusicLibrary.isVisible = true
-//            val res = try {
-//                RetrofitInstance.api.getSongs()
-//            } catch(e: IOException) {
-//                Toast.makeText(activity, "io error: ${e.message}", Toast.LENGTH_LONG).show()
-//                return@launchWhenCreated
-//            } catch(e: HttpException) {
-//                Toast.makeText(activity, "http error", Toast.LENGTH_LONG).show()
-//                return@launchWhenCreated
-//            }
-//            if (res.isSuccessful && res.body() != null) { // 200 status code
-//                musicAdapter.songs = res.body()!!
-//            } else {
-//                Toast.makeText(activity, "response error", Toast.LENGTH_LONG).show()
-//            }
-//            binding.pbMusicLibrary.isVisible = false
+//        playListAdapter.onPlayListClickListener= { playList ->
+////            Toast.makeText(activity, "${song.songName} by ${song.artistName}", Toast.LENGTH_SHORT).show()
+////            currentSong = song
+//            activity?.let { navigateToPlayerActivity(it, playList) }
 //        }
-        playListAdapter.onPlayListClickListener = { playList ->
-            Toast.makeText(activity, "${playList.playListName}", Toast.LENGTH_SHORT).show()
-//            currentSong = song
-//            activity?.let { navigateToPlayerActivity(it, currentSong) }
-        }
-//        getAllSongs()
+
 
         getAllPlayLists()
         return binding.root
@@ -71,9 +51,13 @@ class PlayListFragment: Fragment() {
         layoutManager = LinearLayoutManager(activity)
     }
 
+    override fun onResume() {
+        getAllPlayLists()
+        super.onResume()
+    }
+
     private fun getAllPlayLists() {
         lifecycleScope.launchWhenCreated {
-//            binding.r.isVisible = true
             val res = try {
                 RetrofitInstance.api.getPlayLists()
             } catch(e: IOException) {
@@ -85,12 +69,10 @@ class PlayListFragment: Fragment() {
             }
             if (res.isSuccessful && res.body() != null) { // 200 status code
                 playListAdapter.playLists = res.body()!!
-                Log.i("playlists", res.body()!!.toString())
+                Log.i("playlists", res.body().toString())
             } else {
                 Toast.makeText(activity, "response error", Toast.LENGTH_LONG).show()
             }
-//            binding.pbMusicLibrary.isVisible = false
         }
     }
-
 }

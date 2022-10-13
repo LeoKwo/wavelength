@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_tab_one, R.id.nav_tab_two
+                R.id.nav_tab_one, R.id.nav_tab_two, R.id.nav_tab_three
             )
         )
 

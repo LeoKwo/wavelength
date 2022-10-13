@@ -17,4 +17,10 @@
         android:label="@string/tab_two_name"
         tools:layout="@layout/fragment_song_list" />
 
+    <fragment
+        android:id="@+id/nav_tab_three"
+        android:name="com.example.wavelength.search.SearchFragment"
+        android:label="@string/tab_three_name"
+        tools:layout="@layout/fragment_search" />
+
 </navigation>

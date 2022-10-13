@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
 import com.example.wavelength.R
 import com.example.wavelength.model.Song
 import com.example.wavelength.databinding.ItemSongBinding
@@ -54,10 +55,15 @@ class MusicAdapter: RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
 
             tvSongArtist.text = song.artistName
             tvSongTitle.text = song.songName
-//            tvSongAlbum.text = song.albumName
-            ivAlbumArt.load("https://musiclibrary.nyc3.cdn.digitaloceanspaces.com/${song.songName}.jpeg") {
-                crossfade(true)
-            }
+
+            // Sometimes coil is buggy running in the emulator
+//            ivAlbumArt.load("https://musiclibrary.nyc3.cdn.digitaloceanspaces.com/${song.songName}.jpeg") {
+//                crossfade(true)
+//            }
+
+            Glide.with(context)
+                .load("https://musiclibrary.nyc3.cdn.digitaloceanspaces.com/${song.songName}.jpeg")
+                .into(ivAlbumArt);
 
             clSongItem.setOnClickListener{
                 onSongClickListener(song)
