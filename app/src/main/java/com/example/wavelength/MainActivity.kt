@@ -43,8 +43,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        // hide action bar
-//        supportActionBar?.hide()
+
         supportActionBar?.title = "Wavelength"
 
         setupActionBarWithNavController(navController, appBarConfiguration)

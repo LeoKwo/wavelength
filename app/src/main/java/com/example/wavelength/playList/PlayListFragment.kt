@@ -40,8 +40,8 @@ class PlayListFragment: Fragment() {
 //            activity?.let { navigateToPlayerActivity(it, playList) }
 //        }
 
-
         getAllPlayLists()
+
         return binding.root
     }
 

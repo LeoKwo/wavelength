@@ -20,4 +20,7 @@ interface MusicAPI {
 
     @POST("fav/{id}/{fav}")
     suspend fun favSong(@Path("id") id: String, @Path("fav") fav: Boolean)
+
+    @POST("search/{query}")
+    suspend fun searchSong(@Path("query") query: String): Response<List<Song>>
 }

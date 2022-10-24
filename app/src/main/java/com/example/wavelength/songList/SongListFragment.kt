@@ -74,6 +74,8 @@ class SongListFragment : Fragment()  {
         }
     }
 
+
+
     private fun initRecyclerView() = binding.rvMusicLibrary.apply {
         musicAdapter = MusicAdapter()
         adapter = musicAdapter
