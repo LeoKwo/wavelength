@@ -59,6 +59,14 @@ class PlayListActivity : AppCompatActivity() {
         }
     }
 
+    // REFRESH PAGE ON BACK BUTTON PRESSED
+    override fun onRestart() {
+        super.onRestart()
+        val launchIntent = intent
+        val playList: PlayList? = launchIntent.extras?.getParcelable<PlayList>(PLAYLIST_KEY)
+        if (playList != null) getSongs(playList)
+    }
+
     private fun initRecyclerView() = bindingPlayListBinding.rvSongs.apply {
         musicAdapter = MusicAdapter()
         adapter = musicAdapter
@@ -67,7 +75,7 @@ class PlayListActivity : AppCompatActivity() {
 
     private fun getSongs(playList: PlayList) {
         lifecycleScope.launchWhenCreated {
-//            bindingPlayListBinding.pbMusicLibrary.isVisible = true
+            bindingPlayListBinding.pbPlayList.isVisible = true
             val res = try {
                 if (playList.id == "1") {
 //                    Log.i("Reached here!", playList.id)
@@ -100,7 +108,7 @@ class PlayListActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this@PlayListActivity, "response error", Toast.LENGTH_SHORT).show()
             }
-//            bindingPlayListBinding.pbMusicLibrary.isVisible = false
+            bindingPlayListBinding.pbPlayList.isVisible = false
 
         }
     }
