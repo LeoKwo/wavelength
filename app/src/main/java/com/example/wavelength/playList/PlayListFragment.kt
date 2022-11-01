@@ -15,6 +15,7 @@ import com.example.wavelength.adapter.PlayListAdapter
 import com.example.wavelength.databinding.FragmentPlaylistBinding
 import com.example.wavelength.model.PlayList
 import com.example.wavelength.model.Song
+import com.example.wavelength.navigateToPlayListActivity
 import com.example.wavelength.navigateToPlayerActivity
 import com.example.wavelength.retrofit.RetrofitInstance
 import retrofit2.HttpException
@@ -34,14 +35,13 @@ class PlayListFragment: Fragment() {
 
         initRecyclerView()
 
-//        playListAdapter.onPlayListClickListener= { playList ->
-////            Toast.makeText(activity, "${song.songName} by ${song.artistName}", Toast.LENGTH_SHORT).show()
-////            currentSong = song
-//            activity?.let { navigateToPlayerActivity(it, playList) }
-//        }
-
+        playListAdapter.onPlayListClickListener= { playList ->
+//            Toast.makeText(activity, "Navigating to ${playList.name}", Toast.LENGTH_SHORT).show()
+            activity?.let { navigateToPlayListActivity(it, playList) }
+        }
 
         getAllPlayLists()
+
         return binding.root
     }
 

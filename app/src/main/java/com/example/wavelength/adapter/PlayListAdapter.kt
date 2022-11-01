@@ -15,7 +15,7 @@ import com.example.wavelength.model.PlayList
 import com.example.wavelength.model.Song
 
 class PlayListAdapter: RecyclerView.Adapter<PlayListAdapter.PlayListViewHolder>(){
-//    var onPlayListClickListener: (playList: PlayList) -> Unit = {_ ->}
+    var onPlayListClickListener: (playList: PlayList) -> Unit = {_ ->}
 
     inner class PlayListViewHolder(val binding: ItemPlayListBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -54,7 +54,8 @@ class PlayListAdapter: RecyclerView.Adapter<PlayListAdapter.PlayListViewHolder>(
                     crossfade(true)
                 }
             }
-//            clPlayList.setOnClickListener{onPlayListClickListener(playList)}
+
+            clPlayList.setOnClickListener{onPlayListClickListener(playList)}
         }
     }
 
