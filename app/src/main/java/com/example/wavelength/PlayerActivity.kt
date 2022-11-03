@@ -163,6 +163,10 @@ class PlayerActivity : AppCompatActivity() {
         // long click will change album art style (circle or square)
         ivAlbumArt.setOnLongClickListener {
             if (albumIsCircle) {
+                // disable animations
+                ivAlbumArt.animation = null
+                ivAlbumArtOverlay.animation = null
+
                 ivAlbumArtOverlay.visibility = View.INVISIBLE
                 ivAlbumArt.load(albumURL) {
                     crossfade(true)
