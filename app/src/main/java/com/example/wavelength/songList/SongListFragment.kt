@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -13,11 +14,14 @@ import androidx.lifecycle.lifecycleScope
 //import androidx.lifecycle.LifecycleOwner
 //import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.wavelength.adapter.MusicAdapter
 import com.example.wavelength.databinding.FragmentSongListBinding
 import com.example.wavelength.model.Song
 import com.example.wavelength.navigateToPlayerActivity
 import com.example.wavelength.retrofit.RetrofitInstance
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import okhttp3.internal.notify
 import retrofit2.HttpException
 import java.io.IOException
@@ -36,21 +40,34 @@ class SongListFragment : Fragment()  {
 
         binding = FragmentSongListBinding.inflate(layoutInflater)
 
-        initRecyclerView()
+        createRecyclerView()
 
+        // Wasabeef animations item animation
+        binding.rvMusicLibrary.itemAnimator = SlideInUpAnimator(OvershootInterpolator(1f))
+
+        // swipe to refresh
+        binding.srlSongList.setOnRefreshListener {
+            createRecyclerView()
+            binding.srlSongList.isRefreshing = false
+        }
+
+        return binding.root
+    }
+
+    private fun createRecyclerView() {
+        initRecyclerView()
         musicAdapter.onSongClickListener = { song ->
             Toast.makeText(activity, "${song.songName} by ${song.artistName}", Toast.LENGTH_SHORT).show()
             currentSong = song
             activity?.let { navigateToPlayerActivity(it, currentSong) }
         }
         getAllSongs()
-        return binding.root
     }
 
-    override fun onResume() {
-        getAllSongs()
-        super.onResume()
-    }
+//    override fun onResume() {
+//        getAllSongs()
+//        super.onResume()
+//    }
 
     private fun getAllSongs() {
         lifecycleScope.launchWhenCreated {
