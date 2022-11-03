@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.animation.OvershootInterpolator
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +16,7 @@ import com.example.wavelength.databinding.ActivityPlayListBinding
 import com.example.wavelength.model.PlayList
 import com.example.wavelength.model.Song
 import com.example.wavelength.retrofit.RetrofitInstance
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -57,6 +59,9 @@ class PlayListActivity : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
+
+        // Wasabeef animation
+        bindingPlayListBinding.rvSongs.itemAnimator = SlideInUpAnimator(OvershootInterpolator(1f))
     }
 
     // REFRESH PAGE ON BACK BUTTON PRESSED

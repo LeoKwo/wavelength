@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import com.example.wavelength.model.Song
 import com.example.wavelength.navigateToPlayListActivity
 import com.example.wavelength.navigateToPlayerActivity
 import com.example.wavelength.retrofit.RetrofitInstance
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -42,6 +44,9 @@ class PlayListFragment: Fragment() {
 
         getAllPlayLists()
 
+        // Wasabeef animation
+        binding.rvPlayList.itemAnimator = SlideInUpAnimator(OvershootInterpolator(1f))
+
         return binding.root
     }
 
@@ -58,6 +63,7 @@ class PlayListFragment: Fragment() {
 
     private fun getAllPlayLists() {
         lifecycleScope.launchWhenCreated {
+            binding.pbPlayList.isVisible = true
             val res = try {
                 RetrofitInstance.api.getPlayLists()
             } catch(e: IOException) {
@@ -73,6 +79,7 @@ class PlayListFragment: Fragment() {
             } else {
                 Toast.makeText(activity, "response error", Toast.LENGTH_LONG).show()
             }
+            binding.pbPlayList.isVisible = false
         }
     }
 }

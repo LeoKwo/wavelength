@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.SeekBar
@@ -15,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.wavelength.databinding.ActivityPlayerBinding
@@ -27,6 +29,7 @@ import java.io.IOException
 import kotlin.math.ceil
 
 private const val SONG_KEY = "song"
+private var albumIsCircle = true
 
 fun navigateToPlayerActivity(context: Context, song: Song)  {
     val intent = Intent(context, PlayerActivity::class.java)
@@ -122,6 +125,7 @@ class PlayerActivity : AppCompatActivity() {
 
         // set album art
         ivAlbumArt.load(albumURL) {
+            albumIsCircle = true
             crossfade(true)
             transformations(CircleCropTransformation())
         }
@@ -153,6 +157,26 @@ class PlayerActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 Log.i("post-error", e.message.toString())
             }
+        }
+
+        // long click on album art
+        // long click will change album art style (circle or square)
+        ivAlbumArt.setOnLongClickListener {
+            if (albumIsCircle) {
+                ivAlbumArtOverlay.visibility = View.INVISIBLE
+                ivAlbumArt.load(albumURL) {
+                    crossfade(true)
+                }
+                albumIsCircle = false
+            } else {
+                ivAlbumArtOverlay.visibility = View.VISIBLE
+                ivAlbumArt.load(albumURL) {
+                    crossfade(true)
+                    transformations(CircleCropTransformation())
+                }
+                albumIsCircle = true
+            }
+            true
         }
 
         // seekbar

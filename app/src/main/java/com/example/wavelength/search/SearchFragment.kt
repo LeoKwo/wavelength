@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -21,6 +22,7 @@ import com.example.wavelength.databinding.FragmentSearchBinding
 import com.example.wavelength.navigateToPlayerActivity
 import com.example.wavelength.retrofit.RetrofitInstance
 import com.example.wavelength.songList.SongListFragment
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -61,6 +63,9 @@ class SearchFragment : Fragment() {
                 return false
             }
         })
+
+        // wasabeef animation
+        binding.rvSearchResultList.itemAnimator = SlideInUpAnimator(OvershootInterpolator(1f))
 
         return binding.root
     }
