@@ -15,7 +15,8 @@ object RetrofitInstance {
 //    }
     val api: MusicAPI by lazy {
         Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8093/api/") // 10.0.2.2 is localhost
+            .baseUrl("https://wavelength-app.herokuapp.com/api/")// heroku deploy
+//            .baseUrl("http://10.0.2.2:8093/api/") // 10.0.2.2 is localhost
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(MusicAPI::class.java)
