@@ -19,6 +19,7 @@ import com.example.wavelength.model.Song
 import com.example.wavelength.navigateToPlayListActivity
 import com.example.wavelength.navigateToPlayerActivity
 import com.example.wavelength.retrofit.RetrofitInstance
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import retrofit2.HttpException
 import java.io.IOException
@@ -26,6 +27,7 @@ import java.io.IOException
 class PlayListFragment: Fragment() {
     private lateinit var binding: FragmentPlaylistBinding
     private lateinit var playListAdapter: PlayListAdapter
+    private lateinit var btPlayListEdit: FloatingActionButton
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,15 +39,23 @@ class PlayListFragment: Fragment() {
 
         initRecyclerView()
 
-        playListAdapter.onPlayListClickListener= { playList ->
-//            Toast.makeText(activity, "Navigating to ${playList.name}", Toast.LENGTH_SHORT).show()
-            activity?.let { navigateToPlayListActivity(it, playList) }
+        playListAdapter.onPlayListClickListener = { playList ->
+            activity?.let {
+//                Log.i("bug_here", playList.songs[0].toString())
+                navigateToPlayListActivity(it, playList)
+            }
         }
 
         getAllPlayLists()
 
         // Wasabeef animation
         binding.rvPlayList.itemAnimator = SlideInUpAnimator(OvershootInterpolator(1f))
+
+        // Floating action bar onclick
+        btPlayListEdit = binding.btPlayListEdit
+        btPlayListEdit.setOnClickListener {
+
+        }
 
         return binding.root
     }

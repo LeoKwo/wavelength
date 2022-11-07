@@ -23,4 +23,7 @@ interface MusicAPI {
 
     @POST("search/{query}")
     suspend fun searchSong(@Path("query") query: String): Response<List<Song>>
+
+    @GET("playLists/{id}")
+    suspend fun getPlayList(@Path("id") id: String): Response<PlayList>
 }

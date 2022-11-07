@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
     <item
         android:id="@+id/nav_tab_one"
         android:icon="@drawable/ic_music"
         android:iconTint="@color/gray_purple_off_white"
-        android:title="@string/tab_one_name" />
+        android:title="@string/tab_one_name"
+        />
 
     <item
         android:id="@+id/nav_tab_two"
@@ -17,4 +19,10 @@
         android:icon="@drawable/ic_search"
         android:iconTint="@color/gray_purple_off_white"
         android:title="@string/tab_three_name" />
+
+    <item
+        android:id="@+id/nav_tab_four"
+        android:icon="@drawable/ic_profile"
+        android:iconTint="@color/gray_purple_off_white"
+        android:title="@string/tab_four_name" />
 </menu>

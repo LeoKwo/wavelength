@@ -1,9 +1,11 @@
 package com.example.wavelength.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -49,7 +51,16 @@ class PlayListAdapter: RecyclerView.Adapter<PlayListAdapter.PlayListViewHolder>(
         holder.binding.apply {
             val playList = playLists[position]
             tvPlayListName.text = playList.name
+
+            // set favorites playlist icon properties
+            if (playList.id == "1") { // Favorites
+                // tint favorites heart icon
+                ivPlayListArt.setColorFilter(ContextCompat.getColor(context, R.color.orange))
+            }
+
+            // set non-favorites playlist icon properties
             if (playList.artUrl != "") {
+                Log.i("playlistarturl", playList.artUrl)
                 ivPlayListArt.load(playList.artUrl) {
                     crossfade(true)
                 }

@@ -1,5 +1,7 @@
 package com.example.wavelength
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.media.AudioAttributes
@@ -13,10 +15,8 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.wavelength.databinding.ActivityPlayerBinding
@@ -26,7 +26,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import java.io.IOException
-import kotlin.math.ceil
+
 
 private const val SONG_KEY = "song"
 private var albumIsCircle = true
@@ -103,15 +103,12 @@ class PlayerActivity : AppCompatActivity() {
             Log.i("Set streamURL error", e.message.toString())
         }
 
-        // load rotation animation
-//        val rotation = AnimationUtils.loadAnimation(this, R.anim.rotate)
-//        rotation.fillAfter = true
-
         // play/pause button animation
         ivPlay.setOnClickListener {
             if (!player.isPlaying) {
                 ivAlbumArt.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
                 ivAlbumArtOverlay.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
+
                 ivPlay.setImageResource(R.drawable.ic_pause)
                 player.start()
             } else {

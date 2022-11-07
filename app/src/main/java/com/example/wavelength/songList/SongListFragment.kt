@@ -64,10 +64,11 @@ class SongListFragment : Fragment()  {
         getAllSongs()
     }
 
-//    override fun onResume() {
-//        getAllSongs()
-//        super.onResume()
-//    }
+    // refresh on back button pressed
+    override fun onResume() {
+        getAllSongs()
+        super.onResume()
+    }
 
     private fun getAllSongs() {
         lifecycleScope.launchWhenCreated {
