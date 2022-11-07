@@ -2,7 +2,9 @@ package com.example.wavelength.api
 
 import com.example.wavelength.model.PlayList
 import com.example.wavelength.model.Song
+import com.example.wavelength.requestBody.CreatePlayListBody
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -29,4 +31,7 @@ interface MusicAPI {
 
     @POST("playLists/remove/{id}")
     suspend fun removePlayList(@Path("id") id: String): Response<Void>
+
+    @POST("playLists/create")
+    suspend fun createPlayList(@Body body: CreatePlayListBody): Response<Void>
 }

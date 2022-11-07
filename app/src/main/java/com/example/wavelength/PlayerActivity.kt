@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import coil.load
 import coil.transform.CircleCropTransformation
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.example.wavelength.databinding.ActivityPlayerBinding
 import com.example.wavelength.model.Song
 import com.example.wavelength.retrofit.RetrofitInstance
@@ -121,11 +123,17 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         // set album art
-        ivAlbumArt.load(albumURL) {
-            albumIsCircle = true
-            crossfade(true)
-            transformations(CircleCropTransformation())
-        }
+//        ivAlbumArt.load(albumURL) {
+//            albumIsCircle = true
+//            crossfade(true)
+//            transformations(CircleCropTransformation())
+//        }
+        Glide.with(this)
+            .load(albumURL)
+            .transition(withCrossFade())
+            .circleCrop()
+            .into(ivAlbumArt)
+        albumIsCircle = true
 
         // render fav button
         if (song?.isFavorite == true) {
@@ -165,16 +173,25 @@ class PlayerActivity : AppCompatActivity() {
                 ivAlbumArtOverlay.animation = null
 
                 ivAlbumArtOverlay.visibility = View.INVISIBLE
-                ivAlbumArt.load(albumURL) {
-                    crossfade(true)
-                }
+//                ivAlbumArt.load(albumURL) {
+//                    crossfade(true)
+//                }
+                Glide.with(this)
+                    .load(albumURL)
+                    .transition(withCrossFade())
+                    .into(ivAlbumArt)
                 albumIsCircle = false
             } else {
                 ivAlbumArtOverlay.visibility = View.VISIBLE
-                ivAlbumArt.load(albumURL) {
-                    crossfade(true)
-                    transformations(CircleCropTransformation())
-                }
+//                ivAlbumArt.load(albumURL) {
+//                    crossfade(true)
+//                    transformations(CircleCropTransformation())
+//                }
+                Glide.with(this)
+                    .load(albumURL)
+                    .transition(withCrossFade())
+                    .circleCrop()
+                    .into(ivAlbumArt)
                 albumIsCircle = true
             }
             true

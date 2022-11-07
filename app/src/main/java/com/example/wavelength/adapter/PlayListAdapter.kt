@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
 import com.example.wavelength.R
 import com.example.wavelength.databinding.ItemPlayListBinding
 import com.example.wavelength.databinding.ItemSongBinding
@@ -74,9 +75,10 @@ class PlayListAdapter: RecyclerView.Adapter<PlayListAdapter.PlayListViewHolder>(
             // set non-favorites playlist icon properties
             if (playList.artUrl != "") {
                 Log.i("playlistarturl", playList.artUrl)
-                ivPlayListArt.load(playList.artUrl) {
-                    crossfade(true)
-                }
+                Glide.with(context)
+                    .load(playList.artUrl)
+                    .centerCrop()
+                    .into(ivPlayListArt)
             }
 
             clPlayList.setOnClickListener{onPlayListClickListener(playList)}

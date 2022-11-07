@@ -13,10 +13,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:padding="5dp"
-        android:src="@drawable/ic_heart"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_favorite"
         >
     </ImageView>
 
