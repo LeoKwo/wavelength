@@ -26,4 +26,7 @@ interface MusicAPI {
 
     @GET("playLists/{id}")
     suspend fun getPlayList(@Path("id") id: String): Response<PlayList>
+
+    @POST("playLists/remove/{id}")
+    suspend fun removePlayList(@Path("id") id: String): Response<Void>
 }

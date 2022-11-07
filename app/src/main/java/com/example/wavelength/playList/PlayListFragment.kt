@@ -1,5 +1,6 @@
 package com.example.wavelength.playList
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.wavelength.R
 import com.example.wavelength.adapter.MusicAdapter
 import com.example.wavelength.adapter.PlayListAdapter
 import com.example.wavelength.databinding.FragmentPlaylistBinding
@@ -27,7 +30,8 @@ import java.io.IOException
 class PlayListFragment: Fragment() {
     private lateinit var binding: FragmentPlaylistBinding
     private lateinit var playListAdapter: PlayListAdapter
-    private lateinit var btPlayListEdit: FloatingActionButton
+    private lateinit var btPlayListAdd: FloatingActionButton
+    private var editButtonPressed: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,16 +50,56 @@ class PlayListFragment: Fragment() {
             }
         }
 
+        playListAdapter.onPlayListRemoveClickListener = { playList ->
+            lifecycleScope.launchWhenCreated {
+                val res = try {
+                    RetrofitInstance.api.removePlayList(playList.id)
+                } catch(e: IOException) {
+                    Toast.makeText(activity, "io error: ${e.message}", Toast.LENGTH_SHORT).show()
+                    return@launchWhenCreated
+                } catch(e: HttpException) {
+                    Toast.makeText(activity, "http error", Toast.LENGTH_SHORT).show()
+                    return@launchWhenCreated
+                }
+                // refresh on success
+                if (res.isSuccessful) { // 200 status code
+                    getAllPlayLists()
+                    Toast.makeText(activity, "Removed ${playList.name} playlist", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(activity, "response error", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         getAllPlayLists()
 
         // Wasabeef animation
         binding.rvPlayList.itemAnimator = SlideInUpAnimator(OvershootInterpolator(1f))
 
         // Floating action bar onclick
-        btPlayListEdit = binding.btPlayListEdit
-        btPlayListEdit.setOnClickListener {
-
+        btPlayListAdd = binding.btPlayListEdit
+        btPlayListAdd.setOnClickListener {
+//            if (!editButtonPressed) {
+//                btPlayListEdit.setImageDrawable(
+//                    ContextCompat.getDrawable(
+//                        requireContext(),
+//                        R.drawable.ic_done
+//                    )
+//                )
+//                btPlayListEdit.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.blue))
+//                editButtonPressed = true
+//            } else {
+//                btPlayListEdit.setImageDrawable(
+//                    ContextCompat.getDrawable(
+//                        requireContext(),
+//                        R.drawable.ic_edit
+//                    )
+//                )
+//                btPlayListEdit.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.orange))
+//                editButtonPressed = false
+//            }
         }
+
 
         return binding.root
     }

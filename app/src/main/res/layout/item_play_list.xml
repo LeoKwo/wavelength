@@ -17,7 +17,6 @@
         android:layout_height="55dp"
         android:padding="5dp"
         android:src="@drawable/ic_heart"
-        android:background="@color/purple_off_white"
         >
     </ImageView>
 
@@ -45,5 +44,27 @@
         app:layout_constraintBottom_toBottomOf="parent"
         >
     </TextView>
+
+<!--    <ImageView-->
+<!--        android:id="@+id/btRemove"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:src="@drawable/ic_remove"-->
+<!--        android:visibility="invisible"-->
+<!--    />-->
+    <ImageButton
+        android:id="@+id/btRemove"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_remove"
+        android:background="@color/purple_off_white"
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

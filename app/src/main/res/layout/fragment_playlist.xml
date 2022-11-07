@@ -31,7 +31,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:elevation="20dp"
-        android:src="@drawable/ic_edit"
+        android:src="@drawable/ic_add"
+        android:clickable="true"
+        android:focusable="true"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
