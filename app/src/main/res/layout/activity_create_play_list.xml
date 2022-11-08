@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreatePlayListActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilName"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:hint="Playlist Name"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilUrl"
+        app:layout_constraintTop_toBottomOf="@id/tilName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etUrl"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Playlist Image URL"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+<!--    <androidx.appcompat.widget.LinearLayoutCompat-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        >-->
+
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            android:elevation="0dp"-->
+<!--            android:layout_margin="20dp"-->
+<!--            android:layout_weight="1"-->
+<!--            />-->
+
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            android:elevation="0dp"-->
+<!--            android:layout_margin="20dp"-->
+<!--            android:layout_weight="1"-->
+<!--            />-->
+
+<!--    </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+    <ImageView
+        android:id="@+id/ivPreview"
+        app:layout_constraintTop_toBottomOf="@id/tilUrl"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="20dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_playlist"
+        />
+
+    <Button
+        android:id="@+id/btSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivPreview"
+        android:elevation="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1"
+        android:text="Save"
+        android:textAllCaps="false"
+        />
+
+    <Button
+        android:id="@+id/btValidate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/btSave"
+        app:layout_constraintTop_toBottomOf="@id/ivPreview"
+        android:elevation="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1"
+        android:text="Validate Image URL"
+        android:textAllCaps="false"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

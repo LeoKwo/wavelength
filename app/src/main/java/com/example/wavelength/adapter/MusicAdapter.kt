@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.wavelength.R
 import com.example.wavelength.model.Song
 import com.example.wavelength.databinding.ItemSongBinding
@@ -63,7 +64,8 @@ class MusicAdapter: RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
 
             Glide.with(context)
                 .load("https://musiclibrary.nyc3.cdn.digitaloceanspaces.com/${song.songName}.jpeg")
-                .into(ivAlbumArt);
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(ivAlbumArt)
 
             clSongItem.setOnClickListener{
                 onSongClickListener(song)

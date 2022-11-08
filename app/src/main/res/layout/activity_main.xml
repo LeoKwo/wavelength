@@ -8,11 +8,26 @@
     >
 
     <RelativeLayout
-        android:background="?attr/colorOnPrimary"
+        android:background="@color/purple_off_white"
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+
+<!--    <nl.joery.animatedbottombar.AnimatedBottomBar-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        android:id="@+id/navView"-->
+<!--        android:background="#FFF"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:abb_selectedTabType="text"-->
+<!--        app:abb_indicatorAppearance="round"-->
+<!--        app:abb_indicatorMargin="16dp"-->
+<!--        app:abb_indicatorHeight="4dp"-->
+<!--        app:abb_tabs="@menu/bottom_nav_menu"-->
+<!--        app:abb_selectedIndex="1" />-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
@@ -27,6 +42,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="unlabeled"
         >
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
