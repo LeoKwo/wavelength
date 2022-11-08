@@ -102,9 +102,8 @@ class PlayListActivity : AppCompatActivity() {
     // REFRESH PAGE ON BACK BUTTON PRESSED
     override fun onRestart() {
         super.onRestart()
-        val launchIntent = intent
-        val playList: PlayList? = launchIntent.extras?.getParcelable<PlayList>(PLAYLIST_KEY)
-        if (playList != null) getSongs(playList)
+        finish()
+        // TODO: figure out how to refresh playlist activity recycler view on back button pressed
     }
 
     private fun initRecyclerView() = bindingPlayListBinding.rvSongs.apply {
@@ -214,6 +213,16 @@ class PlayListActivity : AppCompatActivity() {
             bindingPlayListBinding.pbPlayList.isVisible = false
 
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+//        finish()
+//        startActivity(intent)
+//        val launchIntent = intent
+//        val playList: PlayList? = launchIntent.extras?.getParcelable<PlayList>(PLAYLIST_KEY)
+//        if (playList != null) getSongs(playList)
+//        initRecyclerView()
     }
 
     // add back button

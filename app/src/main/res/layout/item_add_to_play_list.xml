@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/clPlayList"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginVertical="8dp"
-    android:layout_marginHorizontal="20dp"
+android:id="@+id/clPlayList"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_marginVertical="8dp"
+android:layout_marginHorizontal="20dp"
     >
 
     <ImageView
@@ -44,27 +45,26 @@
         >
     </TextView>
 
-<!--    <ImageView-->
-<!--        android:id="@+id/btRemove"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        android:layout_width="30dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:src="@drawable/ic_remove"-->
-<!--        android:visibility="invisible"-->
-<!--    />-->
-    <ImageButton
-        android:id="@+id/btRemove"
+    <ImageView
+        android:id="@+id/ivAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_remove"
-        android:background="@color/purple_off_white"
+        android:src="@drawable/ic_add"
         android:visibility="invisible"
-    />
+        />
+
+    <ImageView
+        android:id="@+id/ivRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/ic_remove"
+        android:visibility="invisible"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

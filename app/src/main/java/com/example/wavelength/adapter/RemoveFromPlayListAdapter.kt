@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.bumptech.glide.Glide
 import com.example.wavelength.R
+import com.example.wavelength.databinding.ItemAddToPlayListBinding
 import com.example.wavelength.databinding.ItemPlayListBinding
 import com.example.wavelength.databinding.ItemSongBinding
 import com.example.wavelength.model.PlayList
@@ -27,13 +28,15 @@ import com.example.wavelength.retrofit.RetrofitInstance
 import retrofit2.HttpException
 import java.io.IOException
 
-class PlayListAdapter: RecyclerView.Adapter<PlayListAdapter.PlayListViewHolder>(){
+class RemoveFromPlayListAdapter: RecyclerView.Adapter<RemoveFromPlayListAdapter.RemoveFromPlayListViewHolder>(){
     var onPlayListClickListener: (playList: PlayList) -> Unit = {_ ->}
-    var onPlayListRemoveClickListener: (playList: PlayList) -> Unit = {_ ->}
-    var onPlayListEditClickListener: (playList: PlayList) -> Unit = {_ ->}
-//    var onPlayListLongClickListener: (playList: PlayList) -> Boolean = {  }
 
-    inner class PlayListViewHolder(val binding: ItemPlayListBinding) : RecyclerView.ViewHolder(binding.root)
+
+
+//    var onPlayListRemoveClickListener: (playList: PlayList) -> Unit = {_ ->}
+//    var onPlayListEditClickListener: (playList: PlayList) -> Unit = {_ ->}
+
+    inner class RemoveFromPlayListViewHolder(val binding: ItemAddToPlayListBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val diffCallback = object : DiffUtil.ItemCallback<PlayList>() {
         override fun areItemsTheSame(oldItem: PlayList, newItem: PlayList): Boolean {
@@ -48,33 +51,33 @@ class PlayListAdapter: RecyclerView.Adapter<PlayListAdapter.PlayListViewHolder>(
     private val differ = AsyncListDiffer(this, diffCallback)
     private lateinit var context: Context
 
-    var playLists: List<PlayList>
+    var playlists: List<PlayList>
         get() = differ.currentList
         set(value) {differ.submitList(value)}
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayListViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RemoveFromPlayListViewHolder {
         context = parent.context
-        return PlayListViewHolder(ItemPlayListBinding.inflate(
+        return RemoveFromPlayListViewHolder(ItemAddToPlayListBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         ))
     }
 
-    override fun onBindViewHolder(holder: PlayListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RemoveFromPlayListViewHolder, position: Int) {
         holder.binding.apply {
-            val playList = playLists[position]
+            val playList = playlists[position]
             tvPlayListName.text = playList.name
 
             // set btRemove button style and functionality
-            btRemove.setColorFilter(ContextCompat.getColor(context, R.color.red))
+//            btRemove.setColorFilter(ContextCompat.getColor(context, R.color.red))
 
             // set favorites playlist icon properties
-            if (playList.id == "1") { // Favorites
-                // tint favorites heart icon
-                ivPlayListArt.setColorFilter(ContextCompat.getColor(context, R.color.orange))
-                btRemove.visibility = View.GONE
-            }
+//            if (playList.id == "1") { // Favorites
+//                // tint favorites heart icon
+//                ivPlayListArt.setColorFilter(ContextCompat.getColor(context, R.color.orange))
+//                btRemove.visibility = View.GONE
+//            }
 
             // set non-favorites playlist icon properties
             if (playList.artUrl != "") {
@@ -85,28 +88,28 @@ class PlayListAdapter: RecyclerView.Adapter<PlayListAdapter.PlayListViewHolder>(
                     .into(ivPlayListArt)
             }
 
-            clPlayList.setOnClickListener{onPlayListClickListener(playList)}
+            ivRemove.setColorFilter(ContextCompat.getColor(context, R.color.orange))
+            ivRemove.visibility = View.VISIBLE
+            ivRemove.setOnClickListener{onPlayListClickListener(playList)}
 
-//            btRemove.setOnClickListener{onPlayListRemoveClickListener(playList)}
+//            clPlayList.setOnClickListener{onPlayListClickListener(playList)}
 
-//            btRemove.setOnLongClickListener{ onPlayListLongClickListener(playList) }
-            clPlayList.setOnLongClickListener {
-                val builder = AlertDialog.Builder(context)
-                builder.setMessage("Edit ${playList.name} playlist")
-                builder.setPositiveButton("Delete", DialogInterface.OnClickListener { _, _ ->
-                    onPlayListRemoveClickListener(playList)
-                })
-                builder.setNegativeButton("Cancel") { _, _ -> }
-                builder.setNeutralButton("Edit", DialogInterface.OnClickListener { _, _ ->
-                    onPlayListEditClickListener(playList)
-                })
-
-                builder.show()
-                true
-            }
-
+//            clPlayList.setOnLongClickListener {
+//                val builder = AlertDialog.Builder(context)
+//                builder.setMessage("Edit ${playList.name} playlist")
+//                builder.setPositiveButton("Delete", DialogInterface.OnClickListener { _, _ ->
+//                    onPlayListRemoveClickListener(playList)
+//                })
+//                builder.setNegativeButton("Cancel") { _, _ -> }
+//                builder.setNeutralButton("Edit", DialogInterface.OnClickListener { _, _ ->
+//                    onPlayListEditClickListener(playList)
+//                })
+//
+//                builder.show()
+//                true
+//            }
         }
     }
 
-    override fun getItemCount() = playLists.size
+    override fun getItemCount() = playlists.size
 }

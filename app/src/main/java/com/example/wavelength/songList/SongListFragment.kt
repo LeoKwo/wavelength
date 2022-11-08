@@ -76,17 +76,17 @@ class SongListFragment : Fragment()  {
             val res = try {
                 RetrofitInstance.api.getSongs()
             } catch(e: IOException) {
-                Toast.makeText(activity, "io error: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "io error: ${e.message}", Toast.LENGTH_SHORT).show()
                 return@launchWhenCreated
             } catch(e: HttpException) {
-                Toast.makeText(activity, "http error", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "http error", Toast.LENGTH_SHORT).show()
                 return@launchWhenCreated
             }
             if (res.isSuccessful && res.body() != null) { // 200 status code
                 musicAdapter.songs = res.body()!!
                 Log.i("getAllSongs", res.body().toString())
             } else {
-                Toast.makeText(activity, "response error", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "response error", Toast.LENGTH_SHORT).show()
             }
             binding.pbMusicLibrary.isVisible = false
         }

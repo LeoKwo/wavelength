@@ -82,16 +82,16 @@
             />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <ImageView
-        android:id="@+id/ivFav"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvSongTitle"
-        app:layout_constraintBottom_toBottomOf="@id/llArtistAlbum"
-        android:layout_marginRight="30dp"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/ic_heart_outline"
-        app:tint="@color/dark_gray" />
+<!--    <ImageView-->
+<!--        android:id="@+id/ivFav"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@id/tvSongTitle"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/llArtistAlbum"-->
+<!--        android:layout_marginRight="30dp"-->
+<!--        android:layout_width="20dp"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:src="@drawable/ic_heart_outline"-->
+<!--        app:tint="@color/dark_gray" />-->
 
     <SeekBar
         android:id="@+id/sbSong"
@@ -109,7 +109,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clControl"
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,40 +118,71 @@
         android:gravity="center"
         >
 
+<!--        <ImageView-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            android:id="@+id/ivPrev"-->
+<!--            android:layout_width="25dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:src="@drawable/ic_next"-->
+<!--            android:rotation="180"-->
+<!--            app:tint="@color/dark_blue"-->
+<!--            ></ImageView>-->
+
+<!--        <ImageView-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            android:id="@+id/ivPlay"-->
+<!--            android:layout_width="35dp"-->
+<!--            android:layout_height="35dp"-->
+<!--            android:src="@drawable/ic_play"-->
+<!--            android:layout_marginHorizontal="50dp"-->
+<!--            app:tint="@color/dark_blue"-->
+<!--            ></ImageView>-->
         <ImageView
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/ivPrev"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_next"
-            android:rotation="180"
+            android:id="@+id/ivPlay"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_play"
             app:tint="@color/dark_blue"
             ></ImageView>
 
+<!--        <ImageView-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            android:id="@+id/ivNext"-->
+<!--            android:layout_width="25dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:src="@drawable/ic_next"-->
+<!--            app:tint="@color/dark_blue"-->
+<!--            ></ImageView>-->
         <ImageView
+            android:id="@+id/ivAdd"
+            app:layout_constraintHorizontal_bias=".75"
+            app:layout_constraintStart_toEndOf="@id/ivPlay"
+            app:layout_constraintEnd_toEndOf="@id/ivFav"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/ivPlay"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/ic_play"
-            android:layout_marginHorizontal="50dp"
-            app:tint="@color/dark_blue"
-            ></ImageView>
+            android:src="@drawable/ic_playlist_edit"
+            app:tint="@color/dark_gray" />
 
         <ImageView
+            android:id="@+id/ivFav"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/ivNext"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/ic_next"
-            app:tint="@color/dark_blue"
-            ></ImageView>
+            android:src="@drawable/ic_heart_outline"
+            app:tint="@color/dark_gray" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

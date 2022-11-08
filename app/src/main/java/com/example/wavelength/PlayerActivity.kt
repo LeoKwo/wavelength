@@ -9,6 +9,7 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.ContactsContract.CommonDataKinds.Im
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -61,6 +62,7 @@ class PlayerActivity : AppCompatActivity() {
         val ivAlbumArt = findViewById<ImageView>(R.id.ivAlbumArt)
         val ivAlbumArtOverlay = findViewById<ImageView>(R.id.ivAlbumArtOverlay)
         val ivFav = findViewById<ImageView>(R.id.ivFav)
+        val ivAdd = findViewById<ImageView>(R.id.ivAdd)
 
         val sbSong = findViewById<SeekBar>(R.id.sbSong)
 
@@ -145,6 +147,7 @@ class PlayerActivity : AppCompatActivity() {
             async { RetrofitInstance.api.favSong(song.id, !song.isFavorite) }
         }.await()
 
+        // fav button onclick
         ivFav.setOnClickListener{
             try {
                 runBlocking {
@@ -183,10 +186,10 @@ class PlayerActivity : AppCompatActivity() {
                 albumIsCircle = false
             } else {
                 ivAlbumArtOverlay.visibility = View.VISIBLE
-//                ivAlbumArt.load(albumURL) {
-//                    crossfade(true)
-//                    transformations(CircleCropTransformation())
-//                }
+                // re-enable animation
+                ivAlbumArt.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
+                ivAlbumArtOverlay.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
+
                 Glide.with(this)
                     .load(albumURL)
                     .transition(withCrossFade())
@@ -195,6 +198,10 @@ class PlayerActivity : AppCompatActivity() {
                 albumIsCircle = true
             }
             true
+        }
+
+        ivAdd.setOnClickListener {
+            this?.let { navigateToAddSongToPlayListActivity(it, song!!) }
         }
 
         // seekbar
