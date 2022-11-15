@@ -15,7 +15,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.bumptech.glide.Glide
 import com.example.wavelength.R
 import com.example.wavelength.databinding.ItemPlayListBinding
@@ -90,20 +89,29 @@ class PlayListAdapter: RecyclerView.Adapter<PlayListAdapter.PlayListViewHolder>(
 //            btRemove.setOnClickListener{onPlayListRemoveClickListener(playList)}
 
 //            btRemove.setOnLongClickListener{ onPlayListLongClickListener(playList) }
-            clPlayList.setOnLongClickListener {
-                val builder = AlertDialog.Builder(context)
-                builder.setMessage("Edit ${playList.name} playlist")
-                builder.setPositiveButton("Delete", DialogInterface.OnClickListener { _, _ ->
-                    onPlayListRemoveClickListener(playList)
-                })
-                builder.setNegativeButton("Cancel") { _, _ -> }
-                builder.setNeutralButton("Edit", DialogInterface.OnClickListener { _, _ ->
-                    onPlayListEditClickListener(playList)
-                })
+            if (playList.id == "1") {
+                clPlayList.setOnLongClickListener {
+                    Toast.makeText(context, "Favorites cannot be deleted or renamed", Toast.LENGTH_SHORT).show()
+                    true
+                }
+            } else {
+                clPlayList.setOnLongClickListener {
+                    val builder = AlertDialog.Builder(context)
+                    builder.setMessage("Edit ${playList.name} playlist")
+                    builder.setPositiveButton("Delete", DialogInterface.OnClickListener { _, _ ->
+                        onPlayListRemoveClickListener(playList)
+                    })
+                    builder.setNegativeButton("Cancel") { _, _ -> }
+                    builder.setNeutralButton("Edit", DialogInterface.OnClickListener { _, _ ->
+                        onPlayListEditClickListener(playList)
+                    })
 
-                builder.show()
-                true
+                    builder.show()
+                    true
+                }
             }
+
+
 
         }
     }
