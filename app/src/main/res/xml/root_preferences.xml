@@ -1,0 +1,33 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/album_art_header">
+
+        <SwitchPreferenceCompat
+            app:key="albumArt"
+            app:title="@string/album_art_title"
+            app:summaryOff="Album art will be shown as a disc"
+            app:summaryOn="Album art will be shown as a squared image"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/library_header">
+
+<!--        <SwitchPreferenceCompat-->
+<!--            app:key="librarySorting"-->
+<!--            app:title="@string/album_art_title"-->
+<!--            app:summaryOff="Album art will be shown as a disc"-->
+<!--            app:summaryOn="Album art will be shown as a squared image"-->
+<!--            />-->
+
+
+        <ListPreference
+            app:key="librarySorting"
+            app:title="Select sorting method"
+            app:entries="@array/library_sorting_entries"
+            app:entryValues="@array/library_sorting_values"
+            />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

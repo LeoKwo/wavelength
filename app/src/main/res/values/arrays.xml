@@ -1,0 +1,30 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+
+    <string-array name="library_sorting_entries">
+        <item>None</item>
+        <item>By Title</item>
+        <item>By Artist</item>
+        <item>By Album</item>
+    </string-array>
+
+    <string-array name="library_sorting_values">
+        <item>none</item>
+        <item>title</item>
+        <item>artist</item>
+        <item>album</item>
+    </string-array>
+
+    <string-array name="library_sorting_default">
+        <item>none</item>
+    </string-array>
+</resources>

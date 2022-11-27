@@ -75,4 +75,29 @@ class MusicAdapter: RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
             }
         }
     }
+
+    fun sortByAlbum() {
+        songs = songs.sortedWith { song1, song2 ->
+            song1.albumName.compareTo(song2.albumName)
+        }
+        notifyDataSetChanged()
+    }
+
+    fun sortByTitle() {
+        songs = songs.sortedWith { song1, song2 ->
+            song1.songName.compareTo(song2.songName)
+        }
+        notifyDataSetChanged()
+    }
+
+    fun sortByArtist() {
+        songs = songs.sortedWith { song1, song2 ->
+            song1.artistName.compareTo(song2.artistName)
+        }
+        notifyDataSetChanged()
+    }
+
+    fun scrollToTop() {
+
+    }
 }

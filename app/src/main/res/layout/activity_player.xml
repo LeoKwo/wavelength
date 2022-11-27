@@ -118,29 +118,7 @@
         android:gravity="center"
         >
 
-<!--        <ImageView-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            android:id="@+id/ivPrev"-->
-<!--            android:layout_width="25dp"-->
-<!--            android:layout_height="25dp"-->
-<!--            android:src="@drawable/ic_next"-->
-<!--            android:rotation="180"-->
-<!--            app:tint="@color/dark_blue"-->
-<!--            ></ImageView>-->
 
-<!--        <ImageView-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            android:id="@+id/ivPlay"-->
-<!--            android:layout_width="35dp"-->
-<!--            android:layout_height="35dp"-->
-<!--            android:src="@drawable/ic_play"-->
-<!--            android:layout_marginHorizontal="50dp"-->
-<!--            app:tint="@color/dark_blue"-->
-<!--            ></ImageView>-->
         <ImageView
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -151,16 +129,7 @@
             app:tint="@color/dark_blue"
             ></ImageView>
 
-<!--        <ImageView-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            android:id="@+id/ivNext"-->
-<!--            android:layout_width="25dp"-->
-<!--            android:layout_height="25dp"-->
-<!--            android:src="@drawable/ic_next"-->
-<!--            app:tint="@color/dark_blue"-->
-<!--            ></ImageView>-->
+
         <ImageView
             android:id="@+id/ivAdd"
             app:layout_constraintHorizontal_bias=".75"

@@ -5,6 +5,16 @@
     <string name="tab_three_name">Search</string>
     <string name="tab_four_name">Profile</string>
     <string name="search_query_hint">Search by song name</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_settings">Preferences</string>
+
+    <!-- Preference Titles -->
+    <string name="album_art_header">Album Art</string>
+    <string name="library_header">Library</string>
+
+    <string-array name="library_sorting_default_value">None</string-array>
+    <string name="library_sorting_default_value">none</string>
+
+    <!-- Sync Preferences -->
+    <string name="album_art_title">Regular album art</string>
+
 </resources>
