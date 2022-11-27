@@ -18,6 +18,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.example.wavelength.databinding.ActivityPlayerBinding
@@ -30,7 +31,7 @@ import java.io.IOException
 
 
 private const val SONG_KEY = "song"
-private var albumIsCircle = true
+//private var albumIsCircle = true
 
 fun navigateToPlayerActivity(context: Context, song: Song)  {
     val intent = Intent(context, PlayerActivity::class.java)
@@ -46,10 +47,13 @@ lateinit var player: MediaPlayer
 class PlayerActivity : AppCompatActivity() {
 
     private lateinit var runnable: Runnable
+    private var regularAlbumArt: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
+
+        regularAlbumArt = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("albumArt", false)
 
         setContentView(R.layout.activity_player)
 
@@ -108,14 +112,17 @@ class PlayerActivity : AppCompatActivity() {
         // play/pause button animation
         ivPlay.setOnClickListener {
             if (!player.isPlaying) {
-                ivAlbumArt.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
-                ivAlbumArtOverlay.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
+                if (!regularAlbumArt) {
+                    ivAlbumArt.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
+                    ivAlbumArtOverlay.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
+                }
 
                 ivPlay.setImageResource(R.drawable.ic_pause)
                 player.start()
             } else {
                 ivAlbumArt.animation = null
                 ivAlbumArtOverlay.animation = null
+
                 ivPlay.setImageResource(R.drawable.ic_play)
                 player.pause()
             }
@@ -123,17 +130,37 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         // set album art
-//        ivAlbumArt.load(albumURL) {
-//            albumIsCircle = true
-//            crossfade(true)
-//            transformations(CircleCropTransformation())
-//        }
-        Glide.with(this)
-            .load(albumURL)
-            .transition(withCrossFade())
-            .circleCrop()
-            .into(ivAlbumArt)
-        albumIsCircle = true
+//        Glide.with(this)
+//            .load(albumURL)
+//            .transition(withCrossFade())
+//            .circleCrop()
+//            .into(ivAlbumArt)
+//        albumIsCircle = true
+//        val sharedPref = this?.getPreferences(Context.MODE_PRIVATE) ?: return
+//        Log.i("albumArt",
+//            PreferenceManager.getDefaultSharedPreferences(this).getBoolean("albumArt", false).toString()
+//        )
+
+        if (regularAlbumArt) {
+            Glide.with(this)
+                .load(albumURL)
+                .transition(withCrossFade())
+                .into(ivAlbumArt)
+
+//            ivAlbumArt.animation = null
+//            ivAlbumArtOverlay.animation = null
+            ivAlbumArtOverlay.visibility = View.INVISIBLE
+        } else {
+            Glide.with(this)
+                .load(albumURL)
+                .transition(withCrossFade())
+                .circleCrop()
+                .into(ivAlbumArt)
+
+            ivAlbumArtOverlay.visibility = View.VISIBLE
+//            ivAlbumArt.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
+//            ivAlbumArtOverlay.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
+        }
 
         // render fav button
         if (song?.isFavorite == true) {
@@ -167,36 +194,33 @@ class PlayerActivity : AppCompatActivity() {
 
         // long click on album art
         // long click will change album art style (circle or square)
-        ivAlbumArt.setOnLongClickListener {
-            if (albumIsCircle) {
-                // disable animations
-                ivAlbumArt.animation = null
-                ivAlbumArtOverlay.animation = null
-
-                ivAlbumArtOverlay.visibility = View.INVISIBLE
-//                ivAlbumArt.load(albumURL) {
-//                    crossfade(true)
-//                }
-                Glide.with(this)
-                    .load(albumURL)
-                    .transition(withCrossFade())
-                    .into(ivAlbumArt)
-                albumIsCircle = false
-            } else {
-                ivAlbumArtOverlay.visibility = View.VISIBLE
-                // re-enable animation
-                ivAlbumArt.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
-                ivAlbumArtOverlay.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
-
-                Glide.with(this)
-                    .load(albumURL)
-                    .transition(withCrossFade())
-                    .circleCrop()
-                    .into(ivAlbumArt)
-                albumIsCircle = true
-            }
-            true
-        }
+//        ivAlbumArt.setOnLongClickListener {
+//            if (albumIsCircle) {
+//                // disable animations
+//                ivAlbumArt.animation = null
+//                ivAlbumArtOverlay.animation = null
+//
+//                ivAlbumArtOverlay.visibility = View.INVISIBLE
+//                Glide.with(this)
+//                    .load(albumURL)
+//                    .transition(withCrossFade())
+//                    .into(ivAlbumArt)
+//                albumIsCircle = false
+//            } else {
+//                ivAlbumArtOverlay.visibility = View.VISIBLE
+//                // re-enable animation
+//                ivAlbumArt.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
+//                ivAlbumArtOverlay.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
+//
+//                Glide.with(this)
+//                    .load(albumURL)
+//                    .transition(withCrossFade())
+//                    .circleCrop()
+//                    .into(ivAlbumArt)
+//                albumIsCircle = true
+//            }
+//            true
+//        }
 
         ivAdd.setOnClickListener {
             this?.let { navigateToAddSongToPlayListActivity(it, song!!) }
@@ -241,3 +265,4 @@ class PlayerActivity : AppCompatActivity() {
         return true
     }
 }
+

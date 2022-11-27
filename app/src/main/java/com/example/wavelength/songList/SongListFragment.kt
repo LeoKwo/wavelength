@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.PreferenceManager
 //import androidx.lifecycle.LifecycleOwner
 //import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,11 +35,15 @@ class SongListFragment : Fragment()  {
 
     private lateinit var currentSong: Song
 
+    private var sortedBy = "none"
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreate(savedInstanceState)
 
         binding = FragmentSongListBinding.inflate(layoutInflater)
+
+        sortedBy = PreferenceManager.getDefaultSharedPreferences(context).getString("librarySorting", "none").toString()
 
         createRecyclerView()
 
@@ -84,7 +89,23 @@ class SongListFragment : Fragment()  {
             }
             if (res.isSuccessful && res.body() != null) { // 200 status code
                 musicAdapter.songs = res.body()!!
-                Log.i("getAllSongs", res.body().toString())
+//                Log.i("getAllSongs", res.body().toString())
+//                Log.i("sortedBy", sortedBy)
+                when (sortedBy) {
+                    "album" -> {
+                        musicAdapter.sortByAlbum()
+                        Toast.makeText(context, "Sorted by album", Toast.LENGTH_SHORT).show()
+                    }
+                    "title" -> {
+                        musicAdapter.sortByTitle()
+                        Toast.makeText(context, "Sorted by title", Toast.LENGTH_SHORT).show()
+                    }
+                    "artist" -> {
+                        musicAdapter.sortByArtist()
+                        Toast.makeText(context, "Sorted by artist", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                binding.rvMusicLibrary.smoothScrollToPosition(0)
             } else {
                 Toast.makeText(activity, "response error", Toast.LENGTH_SHORT).show()
             }
