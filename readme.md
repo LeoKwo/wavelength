@@ -1,11 +1,15 @@
 ## Wavelength
 ### Overview
 An Full-stack Android Development project. The result is an app capable of the following functionalities:
+- Create accounts and login to existing accounts
 - Display a list of songs
 - Display a list of playlists
 - Search for songs in the library
 - Create and delete playlists
 - Add songs to and remove songs from playlists
+- Music playback
+- Sort music library with song titles, song albums or artist names
+- Choose to use circular album art or square album arts
 ### Screenshots
 All Songs Page            |  Player Page|  Search Page
 :-------------------------:|:-------------------------:|:-------------------------:
@@ -29,6 +33,7 @@ All Songs Page            |  Player Page|  Search Page
 - Java 11
 - Mongo Java Driver
 - IntelliJ
+- Firebase Authentication
 #### Database
 - MongoDB
 - MongoDB Atlas
