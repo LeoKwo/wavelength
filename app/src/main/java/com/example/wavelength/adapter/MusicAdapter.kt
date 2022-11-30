@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.wavelength.R
+import com.example.wavelength.binding
 import com.example.wavelength.model.Song
 import com.example.wavelength.databinding.ItemSongBinding
 
@@ -95,9 +96,5 @@ class MusicAdapter: RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
             song1.artistName.compareTo(song2.artistName)
         }
         notifyDataSetChanged()
-    }
-
-    fun scrollToTop() {
-
     }
 }

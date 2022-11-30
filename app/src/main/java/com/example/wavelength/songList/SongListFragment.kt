@@ -62,7 +62,11 @@ class SongListFragment : Fragment()  {
     private fun createRecyclerView() {
         initRecyclerView()
         musicAdapter.onSongClickListener = { song ->
-            Toast.makeText(activity, "${song.songName} by ${song.artistName}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                activity,
+                "${song.songName} by ${song.artistName}",
+                Toast.LENGTH_SHORT
+            ).show()
             currentSong = song
             activity?.let { navigateToPlayerActivity(it, currentSong) }
         }
