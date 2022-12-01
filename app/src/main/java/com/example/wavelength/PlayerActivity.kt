@@ -2,10 +2,19 @@ package com.example.wavelength
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.RenderEffect
+import android.graphics.Shader
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.media.AudioAttributes
 import android.media.MediaPlayer
+import android.media.MediaPlayer.OnPreparedListener
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,14 +25,20 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.drawToBitmap
 import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.wavelength.databinding.ActivityPlayerBinding
 import com.example.wavelength.model.Song
 import com.example.wavelength.retrofit.RetrofitInstance
+import jp.wasabeef.blurry.Blurry
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
@@ -31,7 +46,6 @@ import java.io.IOException
 
 
 private const val SONG_KEY = "song"
-//private var albumIsCircle = true
 
 fun navigateToPlayerActivity(context: Context, song: Song)  {
     val intent = Intent(context, PlayerActivity::class.java)
@@ -43,12 +57,15 @@ fun navigateToPlayerActivity(context: Context, song: Song)  {
 
 lateinit var binding: ActivityPlayerBinding
 lateinit var player: MediaPlayer
+private lateinit var streamURL: String
 
 class PlayerActivity : AppCompatActivity() {
 
     private lateinit var runnable: Runnable
     private var regularAlbumArt: Boolean = false
 
+
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
@@ -61,11 +78,11 @@ class PlayerActivity : AppCompatActivity() {
         val tvSongAlbum = findViewById<TextView>(R.id.tvSongAlbum)
         val tvSongArtist = findViewById<TextView>(R.id.tvSongArtist)
         val ivPlay = findViewById<ImageView>(R.id.ivPlay)
+        val ivBG = findViewById<ImageView>(R.id.ivBG)
         val ivAlbumArt = findViewById<ImageView>(R.id.ivAlbumArt)
         val ivAlbumArtOverlay = findViewById<ImageView>(R.id.ivAlbumArtOverlay)
         val ivFav = findViewById<ImageView>(R.id.ivFav)
         val ivAdd = findViewById<ImageView>(R.id.ivAdd)
-
         val sbSong = findViewById<SeekBar>(R.id.sbSong)
 
 
@@ -83,7 +100,7 @@ class PlayerActivity : AppCompatActivity() {
         val song: Song? = launchIntent.extras?.getParcelable<Song>(SONG_KEY)
 
         // init
-        var streamURL = ""
+//        var streamURL = ""
         var albumURL = ""
         if (song != null) {
             // init album art
@@ -130,25 +147,11 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         // set album art
-//        Glide.with(this)
-//            .load(albumURL)
-//            .transition(withCrossFade())
-//            .circleCrop()
-//            .into(ivAlbumArt)
-//        albumIsCircle = true
-//        val sharedPref = this?.getPreferences(Context.MODE_PRIVATE) ?: return
-//        Log.i("albumArt",
-//            PreferenceManager.getDefaultSharedPreferences(this).getBoolean("albumArt", false).toString()
-//        )
-
         if (regularAlbumArt) {
             Glide.with(this)
                 .load(albumURL)
                 .transition(withCrossFade())
                 .into(ivAlbumArt)
-
-//            ivAlbumArt.animation = null
-//            ivAlbumArtOverlay.animation = null
             ivAlbumArtOverlay.visibility = View.INVISIBLE
         } else {
             Glide.with(this)
@@ -156,10 +159,7 @@ class PlayerActivity : AppCompatActivity() {
                 .transition(withCrossFade())
                 .circleCrop()
                 .into(ivAlbumArt)
-
             ivAlbumArtOverlay.visibility = View.VISIBLE
-//            ivAlbumArt.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
-//            ivAlbumArtOverlay.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
         }
 
         // render fav button
@@ -192,36 +192,7 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
 
-        // long click on album art
-        // long click will change album art style (circle or square)
-//        ivAlbumArt.setOnLongClickListener {
-//            if (albumIsCircle) {
-//                // disable animations
-//                ivAlbumArt.animation = null
-//                ivAlbumArtOverlay.animation = null
-//
-//                ivAlbumArtOverlay.visibility = View.INVISIBLE
-//                Glide.with(this)
-//                    .load(albumURL)
-//                    .transition(withCrossFade())
-//                    .into(ivAlbumArt)
-//                albumIsCircle = false
-//            } else {
-//                ivAlbumArtOverlay.visibility = View.VISIBLE
-//                // re-enable animation
-//                ivAlbumArt.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
-//                ivAlbumArtOverlay.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
-//
-//                Glide.with(this)
-//                    .load(albumURL)
-//                    .transition(withCrossFade())
-//                    .circleCrop()
-//                    .into(ivAlbumArt)
-//                albumIsCircle = true
-//            }
-//            true
-//        }
-
+        // edit button onclick
         ivAdd.setOnClickListener {
             this?.let { navigateToAddSongToPlayListActivity(it, song!!) }
         }
@@ -235,9 +206,7 @@ class PlayerActivity : AppCompatActivity() {
                         player.seekTo(progress)
                     }
                 }
-
                 override fun onStartTrackingTouch(seek: SeekBar) { }
-
                 override fun onStopTrackingTouch(seek: SeekBar) { }
             }
         )
@@ -256,6 +225,15 @@ class PlayerActivity : AppCompatActivity() {
             ivAlbumArtOverlay.animation = null
             ivPlay.setImageResource(R.drawable.ic_play)
         }
+
+        // set background with blur
+        Glide.with(this)
+            .load(albumURL)
+            .transition(withCrossFade())
+            .centerCrop()
+            .into(ivBG)
+        ivBG.setRenderEffect(RenderEffect.createBlurEffect(400F, 400F, Shader.TileMode.MIRROR))
+
     }
 
     // add back button
