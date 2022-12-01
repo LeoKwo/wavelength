@@ -24,7 +24,8 @@ class LoginActivity : AppCompatActivity() {
         binding.btLogin.setOnClickListener { login() }
         binding.btSignup.setOnClickListener { createUser() }
         supportActionBar?.hide()
-        window.statusBarColor = resources.getColor(R.color.white, theme)
+        window.statusBarColor = resources.getColor(R.color.purple_off_white, theme)
+
         setContentView(binding.root)
     }
 
