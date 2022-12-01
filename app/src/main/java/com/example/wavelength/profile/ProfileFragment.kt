@@ -11,6 +11,7 @@ import com.example.wavelength.R
 import com.example.wavelength.SettingsActivity
 import com.example.wavelength.databinding.FragmentPlaylistBinding
 import com.example.wavelength.databinding.FragmentProfileBinding
+import okhttp3.internal.immutableListOf
 
 class ProfileFragment : Fragment() {
 
@@ -20,8 +21,18 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentProfileBinding.inflate(layoutInflater)
 
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        binding.llSettings.setOnClickListener {
+            startActivity(Intent(context, SettingsActivity::class.java))
+        }
 
+        binding.btnGetPremium.setOnClickListener {
+
+        }
+        //        return inflater.inflate(R.layout.fragment_profile, container, false)
+        return binding.root
     }
+
+
 }

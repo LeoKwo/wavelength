@@ -9,5 +9,5 @@ data class Song(
     val songName: String,
     val albumName: String,
     val artistName: String,
-    val isFavorite: Boolean
+    var isFavorite: Boolean
 ) : Parcelable

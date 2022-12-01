@@ -71,6 +71,13 @@ dependencies {
     // Wasabeef animations
     implementation 'jp.wasabeef:recyclerview-animators:4.0.2'
 
+    // Wasabeef picasso transformations
+//    implementation("jp.wasabeef:picasso-transformations:2.4.0")
+//    implementation('jp.co.cyberagent.android:gpuimage:2.1.0')
+    implementation('jp.wasabeef:blurry:4.0.1')
+
+//    implementation 'com.github.jgabrielfreitas:BlurImageView:1.0.1'
+
     // pull down to refresh
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
@@ -85,4 +92,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.1.0'
 
     implementation 'com.mikhaellopez:circularimageview:3.0.2'
+
+    // Google Play Billing
+//    implementation 'com.github.maickonn:EasyInAppPurchases:1.0.0'
+//    implementation 'com.android.billingclient:billing:3.0.3'
 }

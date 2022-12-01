@@ -2,36 +2,55 @@ package com.example.wavelength
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.app.Notification.Action
+import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.graphics.*
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.media.AudioAttributes
 import android.media.MediaPlayer
+import android.media.MediaPlayer.OnPreparedListener
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.ContactsContract.CommonDataKinds.Im
 import android.util.Log
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.view.MotionEvent.ACTION_DOWN
 import android.view.View
+import android.view.View.OnTouchListener
+import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.drawToBitmap
 import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.wavelength.databinding.ActivityPlayerBinding
 import com.example.wavelength.model.Song
 import com.example.wavelength.retrofit.RetrofitInstance
+import jp.wasabeef.blurry.Blurry
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import java.io.IOException
+import java.lang.Math.abs
 
 
 private const val SONG_KEY = "song"
-//private var albumIsCircle = true
 
 fun navigateToPlayerActivity(context: Context, song: Song)  {
     val intent = Intent(context, PlayerActivity::class.java)
@@ -43,12 +62,15 @@ fun navigateToPlayerActivity(context: Context, song: Song)  {
 
 lateinit var binding: ActivityPlayerBinding
 lateinit var player: MediaPlayer
+private lateinit var streamURL: String
 
 class PlayerActivity : AppCompatActivity() {
 
     private lateinit var runnable: Runnable
     private var regularAlbumArt: Boolean = false
 
+
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
@@ -61,12 +83,13 @@ class PlayerActivity : AppCompatActivity() {
         val tvSongAlbum = findViewById<TextView>(R.id.tvSongAlbum)
         val tvSongArtist = findViewById<TextView>(R.id.tvSongArtist)
         val ivPlay = findViewById<ImageView>(R.id.ivPlay)
+        val ivBG = findViewById<ImageView>(R.id.ivBG)
         val ivAlbumArt = findViewById<ImageView>(R.id.ivAlbumArt)
         val ivAlbumArtOverlay = findViewById<ImageView>(R.id.ivAlbumArtOverlay)
         val ivFav = findViewById<ImageView>(R.id.ivFav)
         val ivAdd = findViewById<ImageView>(R.id.ivAdd)
-
         val sbSong = findViewById<SeekBar>(R.id.sbSong)
+        val clPlayer = findViewById<ConstraintLayout>(R.id.clPlayer)
 
 
         supportActionBar?.apply {
@@ -83,7 +106,7 @@ class PlayerActivity : AppCompatActivity() {
         val song: Song? = launchIntent.extras?.getParcelable<Song>(SONG_KEY)
 
         // init
-        var streamURL = ""
+//        var streamURL = ""
         var albumURL = ""
         if (song != null) {
             // init album art
@@ -130,25 +153,11 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         // set album art
-//        Glide.with(this)
-//            .load(albumURL)
-//            .transition(withCrossFade())
-//            .circleCrop()
-//            .into(ivAlbumArt)
-//        albumIsCircle = true
-//        val sharedPref = this?.getPreferences(Context.MODE_PRIVATE) ?: return
-//        Log.i("albumArt",
-//            PreferenceManager.getDefaultSharedPreferences(this).getBoolean("albumArt", false).toString()
-//        )
-
         if (regularAlbumArt) {
             Glide.with(this)
                 .load(albumURL)
                 .transition(withCrossFade())
                 .into(ivAlbumArt)
-
-//            ivAlbumArt.animation = null
-//            ivAlbumArtOverlay.animation = null
             ivAlbumArtOverlay.visibility = View.INVISIBLE
         } else {
             Glide.with(this)
@@ -156,10 +165,7 @@ class PlayerActivity : AppCompatActivity() {
                 .transition(withCrossFade())
                 .circleCrop()
                 .into(ivAlbumArt)
-
             ivAlbumArtOverlay.visibility = View.VISIBLE
-//            ivAlbumArt.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
-//            ivAlbumArtOverlay.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
         }
 
         // render fav button
@@ -179,9 +185,11 @@ class PlayerActivity : AppCompatActivity() {
                     if (song != null) {
                         favBtnCallback(song)
                         if (song.isFavorite) {
+                            song.isFavorite = false
                             ivFav.setImageResource(R.drawable.ic_heart_outline)
-                            ivFav.setColorFilter(ContextCompat.getColor(this@PlayerActivity, R.color.dark_gray))
+                            ivFav.setColorFilter(ContextCompat.getColor(this@PlayerActivity, R.color.dark_blue))
                         } else {
+                            song.isFavorite = true
                             ivFav.setImageResource(R.drawable.ic_heart)
                             ivFav.setColorFilter(ContextCompat.getColor(this@PlayerActivity, R.color.orange))
                         }
@@ -192,36 +200,7 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
 
-        // long click on album art
-        // long click will change album art style (circle or square)
-//        ivAlbumArt.setOnLongClickListener {
-//            if (albumIsCircle) {
-//                // disable animations
-//                ivAlbumArt.animation = null
-//                ivAlbumArtOverlay.animation = null
-//
-//                ivAlbumArtOverlay.visibility = View.INVISIBLE
-//                Glide.with(this)
-//                    .load(albumURL)
-//                    .transition(withCrossFade())
-//                    .into(ivAlbumArt)
-//                albumIsCircle = false
-//            } else {
-//                ivAlbumArtOverlay.visibility = View.VISIBLE
-//                // re-enable animation
-//                ivAlbumArt.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
-//                ivAlbumArtOverlay.animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
-//
-//                Glide.with(this)
-//                    .load(albumURL)
-//                    .transition(withCrossFade())
-//                    .circleCrop()
-//                    .into(ivAlbumArt)
-//                albumIsCircle = true
-//            }
-//            true
-//        }
-
+        // edit button onclick
         ivAdd.setOnClickListener {
             this?.let { navigateToAddSongToPlayListActivity(it, song!!) }
         }
@@ -235,9 +214,7 @@ class PlayerActivity : AppCompatActivity() {
                         player.seekTo(progress)
                     }
                 }
-
                 override fun onStartTrackingTouch(seek: SeekBar) { }
-
                 override fun onStopTrackingTouch(seek: SeekBar) { }
             }
         )
@@ -256,13 +233,127 @@ class PlayerActivity : AppCompatActivity() {
             ivAlbumArtOverlay.animation = null
             ivPlay.setImageResource(R.drawable.ic_play)
         }
+
+        // set background with blur
+        Glide.with(this)
+            .load(albumURL)
+            .transition(withCrossFade())
+            .centerCrop()
+            .into(ivBG)
+        ivBG.setRenderEffect(RenderEffect.createBlurEffect(400F, 400F, Shader.TileMode.MIRROR))
+
+        // hide action bar and status bar
+        supportActionBar?.hide()
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
+        // Swipe down to go back
+        clPlayer.setOnTouchListener(object : OnTouchListener {
+            private val gestureDetector: GestureDetector
+            override fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
+                return gestureDetector.onTouchEvent(motionEvent)
+            }
+            private inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
+                private val SWIPE_THRESHOLD: Int = 100
+                private val SWIPE_VELOCITY_THRESHOLD: Int = 100
+                override fun onDown(e: MotionEvent): Boolean {
+                    return true
+                }
+                override fun onSingleTapUp(e: MotionEvent): Boolean {
+                    onClick()
+                    return super.onSingleTapUp(e)
+                }
+                override fun onDoubleTap(e: MotionEvent): Boolean {
+                    onDoubleClick()
+                    return super.onDoubleTap(e)
+                }
+                override fun onLongPress(e: MotionEvent) {
+                    onLongClick()
+                    super.onLongPress(e)
+                }
+                override fun onFling(
+                    e1: MotionEvent,
+                    e2: MotionEvent,
+                    velocityX: Float,
+                    velocityY: Float
+                ): Boolean {
+                    try {
+                        val diffY = e2.y - e1.y
+                        val diffX = e2.x - e1.x
+                        if (abs(diffX) > abs(diffY)) {
+                            if (abs(diffX) > SWIPE_THRESHOLD && abs(
+                                    velocityX
+                                ) > SWIPE_VELOCITY_THRESHOLD
+                            ) {
+                                if (diffX > 0) {
+                                    onSwipeRight()
+                                }
+                                else {
+                                    onSwipeLeft()
+                                }
+                            }
+                        }
+                        else {
+                            if (abs(diffY) > SWIPE_THRESHOLD && abs(
+                                    velocityY
+                                ) > SWIPE_VELOCITY_THRESHOLD
+                            ) {
+                                if (diffY < 0) {
+                                    onSwipeUp()
+                                }
+                                else {
+                                    player.stop()
+                                    onSwipeDown()
+                                }
+                            }
+                        }
+                    } catch (exception: Exception) {
+                        exception.printStackTrace()
+                    }
+                    return false
+                }
+            }
+            open fun onSwipeRight() {}
+            open fun onSwipeLeft() {
+//                player.stop()
+//                onBackPressed()
+//                overridePendingTransition(R.anim.comming_in, R.anim.comming_out)
+            }
+            open fun onSwipeUp() {}
+            open fun onSwipeDown() {
+                player.stop()
+                onBackPressed()
+                overridePendingTransition(R.anim.comming_in, R.anim.comming_out)
+            }
+            private fun onClick() {}
+            private fun onDoubleClick() {}
+            private fun onLongClick() {}
+            init {
+                gestureDetector = GestureDetector(this@PlayerActivity, GestureListener())
+            }
+        })
+
+//            if (motionEvent.action == ACTION_DOWN) {
+//                player.stop()
+//                onBackPressed()
+//                overridePendingTransition(R.anim.comming_in, R.anim.comming_out)
+//            }
+//            false
+
     }
 
     // add back button
-    override fun onSupportNavigateUp(): Boolean {
+//    override fun onSupportNavigateUp(): Boolean {
+//        player.stop()
+//        onBackPressed()
+//        overridePendingTransition(R.anim.comming_in, R.anim.comming_out)
+//        return true
+//    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
         player.stop()
-        onBackPressed()
-        return true
     }
 }
 
