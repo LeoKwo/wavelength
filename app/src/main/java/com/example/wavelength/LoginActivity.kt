@@ -17,6 +17,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var user: FirebaseUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.i("666666","oncreate")
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         Firebase.setAndroidContext(this)
@@ -43,9 +44,12 @@ class LoginActivity : AppCompatActivity() {
 
     //login
     private fun login() {
+        Log.i("test666666",(auth==null).toString())
         auth.signInWithEmailAndPassword(binding.etUsername.text.toString(), binding.etPassword.text.toString())
             .addOnCompleteListener(this) { task ->
+                Log.i("isSuccess6","if------")
                 if (task.isSuccessful) {
+                    Log.i("isSuccess","if------")
                     user = auth.currentUser!!
                     startActivity()
                 } else {
