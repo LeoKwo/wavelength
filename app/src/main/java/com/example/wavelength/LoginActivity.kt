@@ -17,7 +17,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var user: FirebaseUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i("666666","oncreate")
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         Firebase.setAndroidContext(this)
@@ -31,6 +30,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun createUser() {
+        if (binding.etUsername.text.toString() == "" || binding.etPassword.text.toString() == "") {
+            Toast.makeText(this, "Please input email / password", Toast.LENGTH_SHORT).show()
+            return
+        }
         auth.createUserWithEmailAndPassword(binding.etUsername.text.toString(), binding.etPassword.text.toString())
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -44,12 +47,13 @@ class LoginActivity : AppCompatActivity() {
 
     //login
     private fun login() {
-        Log.i("test666666",(auth==null).toString())
+        if (binding.etUsername.text.toString() == "" || binding.etPassword.text.toString() == "") {
+            Toast.makeText(this, "Please input email / password", Toast.LENGTH_SHORT).show()
+            return
+        }
         auth.signInWithEmailAndPassword(binding.etUsername.text.toString(), binding.etPassword.text.toString())
             .addOnCompleteListener(this) { task ->
-                Log.i("isSuccess6","if------")
                 if (task.isSuccessful) {
-                    Log.i("isSuccess","if------")
                     user = auth.currentUser!!
                     startActivity()
                 } else {

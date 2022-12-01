@@ -2,14 +2,13 @@ package com.example.wavelength
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.app.Notification.Action
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.RenderEffect
-import android.graphics.Shader
+import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.media.AudioAttributes
 import android.media.MediaPlayer
@@ -20,7 +19,12 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.ContactsContract.CommonDataKinds.Im
 import android.util.Log
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.view.MotionEvent.ACTION_DOWN
 import android.view.View
+import android.view.View.OnTouchListener
+import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.SeekBar
@@ -43,6 +47,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import java.io.IOException
+import java.lang.Math.abs
 
 
 private const val SONG_KEY = "song"
@@ -84,6 +89,7 @@ class PlayerActivity : AppCompatActivity() {
         val ivFav = findViewById<ImageView>(R.id.ivFav)
         val ivAdd = findViewById<ImageView>(R.id.ivAdd)
         val sbSong = findViewById<SeekBar>(R.id.sbSong)
+        val clPlayer = findViewById<ConstraintLayout>(R.id.clPlayer)
 
 
         supportActionBar?.apply {
@@ -179,9 +185,11 @@ class PlayerActivity : AppCompatActivity() {
                     if (song != null) {
                         favBtnCallback(song)
                         if (song.isFavorite) {
+                            song.isFavorite = false
                             ivFav.setImageResource(R.drawable.ic_heart_outline)
-                            ivFav.setColorFilter(ContextCompat.getColor(this@PlayerActivity, R.color.dark_gray))
+                            ivFav.setColorFilter(ContextCompat.getColor(this@PlayerActivity, R.color.dark_blue))
                         } else {
+                            song.isFavorite = true
                             ivFav.setImageResource(R.drawable.ic_heart)
                             ivFav.setColorFilter(ContextCompat.getColor(this@PlayerActivity, R.color.orange))
                         }
@@ -234,13 +242,118 @@ class PlayerActivity : AppCompatActivity() {
             .into(ivBG)
         ivBG.setRenderEffect(RenderEffect.createBlurEffect(400F, 400F, Shader.TileMode.MIRROR))
 
+        // hide action bar and status bar
+        supportActionBar?.hide()
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
+        // Swipe down to go back
+        clPlayer.setOnTouchListener(object : OnTouchListener {
+            private val gestureDetector: GestureDetector
+            override fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
+                return gestureDetector.onTouchEvent(motionEvent)
+            }
+            private inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
+                private val SWIPE_THRESHOLD: Int = 100
+                private val SWIPE_VELOCITY_THRESHOLD: Int = 100
+                override fun onDown(e: MotionEvent): Boolean {
+                    return true
+                }
+                override fun onSingleTapUp(e: MotionEvent): Boolean {
+                    onClick()
+                    return super.onSingleTapUp(e)
+                }
+                override fun onDoubleTap(e: MotionEvent): Boolean {
+                    onDoubleClick()
+                    return super.onDoubleTap(e)
+                }
+                override fun onLongPress(e: MotionEvent) {
+                    onLongClick()
+                    super.onLongPress(e)
+                }
+                override fun onFling(
+                    e1: MotionEvent,
+                    e2: MotionEvent,
+                    velocityX: Float,
+                    velocityY: Float
+                ): Boolean {
+                    try {
+                        val diffY = e2.y - e1.y
+                        val diffX = e2.x - e1.x
+                        if (abs(diffX) > abs(diffY)) {
+                            if (abs(diffX) > SWIPE_THRESHOLD && abs(
+                                    velocityX
+                                ) > SWIPE_VELOCITY_THRESHOLD
+                            ) {
+                                if (diffX > 0) {
+                                    onSwipeRight()
+                                }
+                                else {
+                                    onSwipeLeft()
+                                }
+                            }
+                        }
+                        else {
+                            if (abs(diffY) > SWIPE_THRESHOLD && abs(
+                                    velocityY
+                                ) > SWIPE_VELOCITY_THRESHOLD
+                            ) {
+                                if (diffY < 0) {
+                                    onSwipeUp()
+                                }
+                                else {
+                                    player.stop()
+                                    onSwipeDown()
+                                }
+                            }
+                        }
+                    } catch (exception: Exception) {
+                        exception.printStackTrace()
+                    }
+                    return false
+                }
+            }
+            open fun onSwipeRight() {}
+            open fun onSwipeLeft() {
+//                player.stop()
+//                onBackPressed()
+//                overridePendingTransition(R.anim.comming_in, R.anim.comming_out)
+            }
+            open fun onSwipeUp() {}
+            open fun onSwipeDown() {
+                player.stop()
+                onBackPressed()
+                overridePendingTransition(R.anim.comming_in, R.anim.comming_out)
+            }
+            private fun onClick() {}
+            private fun onDoubleClick() {}
+            private fun onLongClick() {}
+            init {
+                gestureDetector = GestureDetector(this@PlayerActivity, GestureListener())
+            }
+        })
+
+//            if (motionEvent.action == ACTION_DOWN) {
+//                player.stop()
+//                onBackPressed()
+//                overridePendingTransition(R.anim.comming_in, R.anim.comming_out)
+//            }
+//            false
+
     }
 
     // add back button
-    override fun onSupportNavigateUp(): Boolean {
+//    override fun onSupportNavigateUp(): Boolean {
+//        player.stop()
+//        onBackPressed()
+//        overridePendingTransition(R.anim.comming_in, R.anim.comming_out)
+//        return true
+//    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
         player.stop()
-        onBackPressed()
-        return true
     }
 }
 
