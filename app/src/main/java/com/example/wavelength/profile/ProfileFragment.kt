@@ -20,8 +20,12 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentProfileBinding.inflate(layoutInflater)
 
-        return inflater.inflate(R.layout.fragment_profile, container, false)
-
+        binding.llSettings.setOnClickListener {
+            startActivity(Intent(context, SettingsActivity::class.java))
+        }
+//        return inflater.inflate(R.layout.fragment_profile, container, false)
+        return binding.root
     }
 }
