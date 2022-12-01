@@ -26,4 +26,20 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Jasper">Jasper</string>
+    <string name="userid">\@jasper666</string>
+    <string name="todo">TODO</string>
+    <string name="Your_channel">Your channel</string>
+    <string name="History">History</string>
+    <string name="Your_Recap">Your Recap</string>
+    <string name="Switch_account">Switch account</string>
+    <string name="Settings">Settings</string>
+    <string name="Help_feedback"><![CDATA[Help & feedback]]></string>
+    <string name="get_premium">Get Music Premium</string>
+    <string name="premium_intro">Enjoy ad-free music, listen in audio mode, play music offline, and download music</string>
+    <string name="privacy">Privacy Policy · Terms of Service</string>
+    <string name="account">Account</string>
+    <string name="manage_acc">Manage your Wavelength Account</string>
 </resources>

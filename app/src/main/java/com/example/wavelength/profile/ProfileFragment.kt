@@ -21,18 +21,7 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentProfileBinding.inflate(layoutInflater)
+        return inflater.inflate(R.layout.fragment_profile, container, false)
 
-        binding.btSettings.setOnClickListener {
-            startActivity(Intent(context, SettingsActivity::class.java))
-        }
-
-//        binding.btLogin.setOnClickListener {
-//            startActivity(Intent(context, LoginActivity::class.java))
-//        }
-
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_profile, container, false)
-        return binding.root
     }
 }
