@@ -6,6 +6,7 @@
     <string name="tab_four_name">Profile</string>
     <string name="search_query_hint">Search by song name</string>
     <string name="title_activity_settings">Preferences</string>
+    <string name="title_activity_purchase">Get Wavelength Premium</string>
 
     <!-- Preference Titles -->
     <string name="album_art_header">Album Art</string>

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.wavelength.LoginActivity
+import com.example.wavelength.PurchaseActivity
 import com.example.wavelength.R
 import com.example.wavelength.SettingsActivity
 import com.example.wavelength.databinding.FragmentPlaylistBinding
@@ -28,7 +29,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btnGetPremium.setOnClickListener {
-
+            startActivity(Intent(context, PurchaseActivity::class.java))
         }
         //        return inflater.inflate(R.layout.fragment_profile, container, false)
         return binding.root
