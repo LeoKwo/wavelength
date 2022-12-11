@@ -7,26 +7,35 @@ An Full-stack Android Development project. The result is an app capable of the f
 - Search for songs in the library
 - Create and delete playlists
 - Add songs to and remove songs from playlists
-- Music playback
+- On-demand music playback
 - Sort music library with song titles, song albums or artist names
 - Choose to use circular album art or square album arts
+- Deployment to the cloud (Heroku)
+
 ### Screenshots
 All Songs Page            |  Player Page|  Search Page
 :-------------------------:|:-------------------------:|:-------------------------:
-![screenshot 1](./readme_files/Screenshot_20221115_172851.png)  |  ![screenshot 1](./readme_files/Screenshot_20221115_173107.png)|  ![screenshot 1](./readme_files/Screenshot_20221115_173051.png)
+![screenshot 1](./readme_files/Screenshot_20221211_172631.png)  |  ![screenshot 1](./readme_files/Screenshot_20221211_172347.png)|  ![screenshot 1](./readme_files/Screenshot_20221211_172717.png)
 
   Playlist Page|Create New Playlist Page            |  Update Playlist Page
 :-------------------------:|:-------------------------:|:-------------------------:
-![screenshot 1](./readme_files/Screenshot_20221115_172916.png)|![screenshot 1](./readme_files/Screenshot_20221115_173003.png)  |  ![screenshot 1](./readme_files/Screenshot_20221115_173115.png)
+![screenshot 1](./readme_files/Screenshot_20221211_172749.png)|![screenshot 1](./readme_files/Screenshot_20221211_173202.png)  |  ![screenshot 1](./readme_files/Screenshot_20221211_173250.png)
+
+Login Page| Profile Page            |  Settings Page
+:-------------------------:|:-------------------------:|:-------------------------:
+![screenshot 1](./readme_files/Screenshot_20221211_172702.png)|![screenshot 1](./readme_files/Screenshot_20221211_173317.png)  |  ![screenshot 1](./readme_files/Screenshot_20221211_173326.png)
+
+### Targeted Android API
+Android API 31+. API 33 recommended.
+Tested on emulators running API 33. Unknown errors may occur if installed on older devices or emulators with lower APIs.
 
 ### Technology used
 #### Frontend
 - Kotlin
 - Retrofit
 - Wasabeef animations
-- Coil
 - Glide
-- Coroutines
+- Coroutines lifecycles
 - Android Studio
 #### Backend
 - Spring Boot
@@ -42,5 +51,5 @@ All Songs Page            |  Player Page|  Search Page
 #### Deployment
 - Heroku
 
-### For more detail
+### For more details
 Check out this [page](https://rkguo.xyz/project-blog-details-wavelength) on my personal website
