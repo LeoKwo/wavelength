@@ -12,6 +12,9 @@ An Full-stack Android Development project. The result is an app capable of the f
 - Choose to use circular album art or square album arts
 - Deployment to the cloud (Heroku)
 
+### Structure
+![Project Structure](./readme_files/structure.jpg)
+
 ### Screenshots
 All Songs Page            |  Player Page|  Search Page
 :-------------------------:|:-------------------------:|:-------------------------:
